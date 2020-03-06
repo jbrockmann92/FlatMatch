@@ -7,9 +7,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FlatMatchApp.Data;
 using FlatMatchApp.Models;
+using Microsoft.AspNetCore.Authorization;
+using FlatMatchApp.ActionFilters;
 
 namespace FlatMatchApp.Controllers
 {
+    [ServiceFilter(typeof(GlobalRouting))]
+    [Authorize(Roles = "Renter")]
     public class RentersController : Controller
     {
         private readonly ApplicationDbContext _context;

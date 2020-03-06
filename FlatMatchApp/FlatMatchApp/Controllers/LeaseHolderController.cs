@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using FlatMatchApp.ActionFilters;
 using FlatMatchApp.Data;
 using FlatMatchApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlatMatchApp.Controllers
 {
+    [ServiceFilter(typeof(GlobalRouting))]
+    [Authorize(Roles = "Leaseholder")]
     public class LeaseholderController : Controller
     {
         private readonly ApplicationDbContext _context;
