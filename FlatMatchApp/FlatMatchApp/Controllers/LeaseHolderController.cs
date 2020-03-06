@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using FlatMatchApp.ActionFilters;
 using FlatMatchApp.Data;
 using FlatMatchApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlatMatchApp.Controllers
 {
+    [ServiceFilter(typeof(GlobalRouting))]
+    [Authorize(Roles = "Leaseholder")]
     public class LeaseholderController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -26,7 +30,7 @@ namespace FlatMatchApp.Controllers
             var leaseholder = _context.Leaseholders.FirstOrDefault(l => l.UserId == userId);
             if(leaseholder == null)
             {
-                return NotFound();
+                return View("Create");
             }
             return View(leaseholder);
         }
@@ -91,26 +95,32 @@ namespace FlatMatchApp.Controllers
         }
 
         // GET: LeaseHolder/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            var leaseholder = _context.Leaseholders.Include(l => l.Property).FirstOrDefault(l => l.Id == id);
+
+            if(leaseholder == null)
+            {
+                return NotFound();
+            }
+
+            return View(leaseholder);
         }
 
         // POST: LeaseHolder/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var leaseholder = _context.Leaseholders.Find(id);
+            _context.Leaseholders.Remove(leaseholder);
+            _context.SaveChanges();
+            return Redirect("Index");
         }
     }
 }
