@@ -57,9 +57,6 @@ namespace FlatMatchApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AddressId")
-                        .HasColumnType("int");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -76,7 +73,7 @@ namespace FlatMatchApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
+                    b.HasIndex("PropertyId");
 
                     b.HasIndex("UserId");
 
@@ -160,6 +157,9 @@ namespace FlatMatchApp.Migrations
                     b.Property<string>("Activities")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
                     b.Property<int>("NumberBedrooms")
                         .HasColumnType("int");
 
@@ -177,6 +177,8 @@ namespace FlatMatchApp.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
 
                     b.ToTable("Properties");
                 });
@@ -265,15 +267,15 @@ namespace FlatMatchApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a84e567a-c166-4640-b98c-390fd5258010",
-                            ConcurrencyStamp = "bd90672e-a553-4362-be74-ef00d088034a",
+                            Id = "1d2b59bc-bc4a-429f-a65f-b43be61b1e4d",
+                            ConcurrencyStamp = "85755684-53e5-4223-bdda-029347445527",
                             Name = "Renter",
                             NormalizedName = "RENTER"
                         },
                         new
                         {
-                            Id = "7c478f07-33af-445f-b9dd-810fb24448b4",
-                            ConcurrencyStamp = "26713184-d0e0-40d0-a3ce-1798bb709343",
+                            Id = "76145f2a-a417-4988-80da-9d71cc92cbfd",
+                            ConcurrencyStamp = "55de2de1-b2a1-42ef-8860-8a03c5792ec2",
                             Name = "Leaseholder",
                             NormalizedName = "LEASEHOLDER"
                         });
@@ -450,13 +452,24 @@ namespace FlatMatchApp.Migrations
 
             modelBuilder.Entity("FlatMatchApp.Models.Leaseholder", b =>
                 {
-                    b.HasOne("FlatMatchApp.Models.Address", "Address")
+                    b.HasOne("FlatMatchApp.Models.Property", "Property")
                         .WithMany()
-                        .HasForeignKey("AddressId");
+                        .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("FlatMatchApp.Models.Property", b =>
+                {
+                    b.HasOne("FlatMatchApp.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FlatMatchApp.Models.Renter", b =>
