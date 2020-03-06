@@ -6,16 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\Migrations\20200306162627_SetSoUserPreferencesMapsToDb.cs" />
-    <Compile Remove="Data\Migrations\20200306162627_SetSoUserPreferencesMapsToDb.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200306163253_SetSoUserPreferencesMapsToDb.cs" />
-    <Compile Remove="Data\Migrations\20200306163253_SetSoUserPreferencesMapsToDb.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200306163557_SetSoUserPreferencesMapsToDb.cs" />
-    <Compile Remove="Data\Migrations\20200306163557_SetSoUserPreferencesMapsToDb.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200306171106_SetSoUserPreferencesMapsToDb.cs" />
-    <Compile Remove="Data\Migrations\20200306171106_SetSoUserPreferencesMapsToDb.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200306171724_SetSoUserPreferencesMapsToDb.cs" />
-    <Compile Remove="Data\Migrations\20200306171724_SetSoUserPreferencesMapsToDb.Designer.cs" />
+    <Compile Remove="Data\Migrations\**" />
+    <Content Remove="Data\Migrations\**" />
+    <EmbeddedResource Remove="Data\Migrations\**" />
+    <None Remove="Data\Migrations\**" />
   </ItemGroup>
 
 
@@ -34,7 +28,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Data\Migrations\" />
     <Folder Include="Views\Leaseholder\" />
   </ItemGroup>
 
