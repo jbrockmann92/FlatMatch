@@ -26,7 +26,7 @@ namespace FlatMatchApp.Controllers
             var leaseholder = _context.Leaseholders.FirstOrDefault(l => l.UserId == userId);
             if(leaseholder == null)
             {
-                return NotFound();
+                return View("Create");
             }
             return View(leaseholder);
         }
