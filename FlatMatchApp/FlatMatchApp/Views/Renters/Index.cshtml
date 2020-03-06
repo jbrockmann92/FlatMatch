@@ -1,7 +1,8 @@
-﻿@model IEnumerable<FlatMatchApp.Models.Renter>
+﻿@model IEnumerable<FlatMatchApp.Models.RenterViewModel>
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_RenterLayout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -19,13 +20,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+                @Html.DisplayNameFor(model => model.Renter.FirstName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                @Html.DisplayNameFor(model => model.Renter.LastName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdentityUser)
+                @Html.DisplayNameFor(model => model.Renter.IdentityUser)
             </th>
             <th></th>
         </tr>
@@ -34,18 +35,18 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
+                @Html.DisplayFor(modelItem => item.Renter.FirstName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LastName)
+                @Html.DisplayFor(modelItem => item.Renter.LastName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdentityUser.Id)
+                @Html.DisplayFor(modelItem => item.Renter.IdentityUser.Id)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Renter.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Renter.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Renter.Id">Delete</a>
             </td>
         </tr>
 }
