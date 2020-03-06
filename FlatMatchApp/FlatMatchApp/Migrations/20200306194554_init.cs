@@ -77,24 +77,6 @@ namespace FlatMatchApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Properties",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Activities = table.Column<string>(nullable: true),
-                    SquareFootage = table.Column<double>(nullable: false),
-                    Price = table.Column<double>(nullable: false),
-                    Type = table.Column<string>(nullable: false),
-                    NumberBedrooms = table.Column<int>(nullable: false),
-                    isAvailable = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Properties", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "UserPreferences",
                 columns: table => new
                 {
@@ -107,6 +89,31 @@ namespace FlatMatchApp.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserPreferences", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Properties",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Activities = table.Column<string>(nullable: true),
+                    SquareFootage = table.Column<double>(nullable: false),
+                    Price = table.Column<double>(nullable: false),
+                    Type = table.Column<string>(nullable: false),
+                    NumberBedrooms = table.Column<int>(nullable: false),
+                    isAvailable = table.Column<bool>(nullable: false),
+                    AddressId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Properties", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Properties_Addresses_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Addresses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -216,35 +223,6 @@ namespace FlatMatchApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Leaseholders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(nullable: false),
-                    LastName = table.Column<string>(nullable: false),
-                    PropertyId = table.Column<int>(nullable: false),
-                    AddressId = table.Column<int>(nullable: true),
-                    UserId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Leaseholders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Leaseholders_Addresses_AddressId",
-                        column: x => x.AddressId,
-                        principalTable: "Addresses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Leaseholders_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Renters",
                 columns: table => new
                 {
@@ -268,13 +246,41 @@ namespace FlatMatchApp.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Leaseholders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
+                    PropertyId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Leaseholders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Leaseholders_Properties_PropertyId",
+                        column: x => x.PropertyId,
+                        principalTable: "Properties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Leaseholders_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "a84e567a-c166-4640-b98c-390fd5258010", "bd90672e-a553-4362-be74-ef00d088034a", "Renter", "RENTER" },
-                    { "9cb9955b-2691-4401-8701-9fcf7b1ca426", "17a8a7c3-cd41-44fd-a0c1-a04e65b61aa1", "Leaseholder", "LEASEHOLDER" }
+                    { "1e0b9a11-c9e8-4bd7-a489-53d52786baca", "d3327043-1d08-4bf8-b3a7-5ab5324e516d", "Renter", "RENTER" },
+                    { "604244c1-96b2-4884-9f13-50e2d4e7d2e2", "53b647b8-7d56-4261-96e8-644f30f2911f", "Leaseholder", "LEASEHOLDER" }
                 });
 
             migrationBuilder.InsertData(
@@ -334,14 +340,19 @@ namespace FlatMatchApp.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Leaseholders_AddressId",
+                name: "IX_Leaseholders_PropertyId",
                 table: "Leaseholders",
-                column: "AddressId");
+                column: "PropertyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Leaseholders_UserId",
                 table: "Leaseholders",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Properties_AddressId",
+                table: "Properties",
+                column: "AddressId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Renters_UserId",
@@ -373,9 +384,6 @@ namespace FlatMatchApp.Migrations
                 name: "Preferences");
 
             migrationBuilder.DropTable(
-                name: "Properties");
-
-            migrationBuilder.DropTable(
                 name: "Renters");
 
             migrationBuilder.DropTable(
@@ -385,10 +393,13 @@ namespace FlatMatchApp.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Addresses");
+                name: "Properties");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Addresses");
         }
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlatMatchApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200306172957_init")]
+    [Migration("20200306194554_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,9 +59,6 @@ namespace FlatMatchApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AddressId")
-                        .HasColumnType("int");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -78,7 +75,7 @@ namespace FlatMatchApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
+                    b.HasIndex("PropertyId");
 
                     b.HasIndex("UserId");
 
@@ -162,6 +159,9 @@ namespace FlatMatchApp.Migrations
                     b.Property<string>("Activities")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
                     b.Property<int>("NumberBedrooms")
                         .HasColumnType("int");
 
@@ -179,6 +179,8 @@ namespace FlatMatchApp.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
 
                     b.ToTable("Properties");
                 });
@@ -267,15 +269,15 @@ namespace FlatMatchApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a84e567a-c166-4640-b98c-390fd5258010",
-                            ConcurrencyStamp = "bd90672e-a553-4362-be74-ef00d088034a",
+                            Id = "1e0b9a11-c9e8-4bd7-a489-53d52786baca",
+                            ConcurrencyStamp = "d3327043-1d08-4bf8-b3a7-5ab5324e516d",
                             Name = "Renter",
                             NormalizedName = "RENTER"
                         },
                         new
                         {
-                            Id = "9cb9955b-2691-4401-8701-9fcf7b1ca426",
-                            ConcurrencyStamp = "17a8a7c3-cd41-44fd-a0c1-a04e65b61aa1",
+                            Id = "604244c1-96b2-4884-9f13-50e2d4e7d2e2",
+                            ConcurrencyStamp = "53b647b8-7d56-4261-96e8-644f30f2911f",
                             Name = "Leaseholder",
                             NormalizedName = "LEASEHOLDER"
                         });
@@ -452,13 +454,24 @@ namespace FlatMatchApp.Migrations
 
             modelBuilder.Entity("FlatMatchApp.Models.Leaseholder", b =>
                 {
-                    b.HasOne("FlatMatchApp.Models.Address", "Address")
+                    b.HasOne("FlatMatchApp.Models.Property", "Property")
                         .WithMany()
-                        .HasForeignKey("AddressId");
+                        .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("FlatMatchApp.Models.Property", b =>
+                {
+                    b.HasOne("FlatMatchApp.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FlatMatchApp.Models.Renter", b =>
