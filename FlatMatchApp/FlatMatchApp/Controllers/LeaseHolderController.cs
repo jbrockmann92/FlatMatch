@@ -13,16 +13,22 @@ namespace FlatMatchApp.Controllers
 {
     public class LeaseholderController : Controller
     {
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         public LeaseholderController(ApplicationDbContext context)
         {
             _context = context;
         }
-        // GET: LeaseHolder
 
-        public ActionResult Index()
+        // GET: LeaseHolder
+        public IActionResult Index() //RP
         {
-            return View();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var leaseholder = _context.Leaseholders.FirstOrDefault(l => l.UserId == userId);
+            if(leaseholder == null)
+            {
+                return NotFound();
+            }
+            return View(leaseholder);
         }
 
         // GET: LeaseHolder/Details/5
@@ -32,17 +38,12 @@ namespace FlatMatchApp.Controllers
             var leaseholder = _context.Leaseholders.SingleOrDefault(x => x.Id == id);
             return View(leaseholder);
         }
-
         // GET: LeaseHolder/Create
         [HttpGet]
         public IActionResult Create()
         {
-
             var leaseholder = new Leaseholder();
             return View(leaseholder);
-
-
-
         }
 
         // POST: LeaseHolder/Create
@@ -57,16 +58,37 @@ namespace FlatMatchApp.Controllers
         }
 
         // GET: LeaseHolder/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id) //RP
         {
-            
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var leaseholder = _context.Leaseholders.FirstOrDefault(l => l.UserId == userId);
+            return View(leaseholder);
         }
 
         // POST: LeaseHolder/Edit/5
         [HttpPost]
-        public IActionResult Edit(Leaseholder leaseholder)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, [Bind("FirstName,LastName")] Leaseholder leaseholder) //RP
         {
-           
+            if (id != leaseholder.Id)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                // TODO: Add update logic here
+                Leaseholder editLeaseholder = _context.Leaseholders.Find(id);
+                editLeaseholder.FirstName = leaseholder.FirstName;
+                editLeaseholder.LastName = leaseholder.LastName;
+                editLeaseholder.Address.StreetName = leaseholder.Address.StreetName;
+                editLeaseholder.Address.ApartmentNumber = leaseholder.Address.ApartmentNumber;
+                editLeaseholder.Address.City = leaseholder.Address.City;
+                editLeaseholder.Address.State = leaseholder.Address.State;
+                editLeaseholder.Address.ZipCode = leaseholder.Address.ZipCode;
+            }
+
+                return RedirectToAction(nameof(Index));
+            
         }
 
         // GET: LeaseHolder/Delete/5

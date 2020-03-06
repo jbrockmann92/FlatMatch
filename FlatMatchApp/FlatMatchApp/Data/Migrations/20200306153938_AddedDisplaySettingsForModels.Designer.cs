@@ -4,14 +4,16 @@ using FlatMatchApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FlatMatchApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200306153938_AddedDisplaySettingsForModels")]
+    partial class AddedDisplaySettingsForModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,9 +92,14 @@ namespace FlatMatchApp.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Exists")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Value")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -137,21 +144,12 @@ namespace FlatMatchApp.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("FacebookSocial")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-
-                    b.Property<string>("InstagramSocial")
-                        .HasColumnType("nvarchar(max)");
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TwitterSocial")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
@@ -193,17 +191,15 @@ namespace FlatMatchApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e6ac571b-8f35-46db-aade-3ed8df33de6d",
-                            ConcurrencyStamp = "765de06a-fabf-4d50-8c8f-1853c96d3b07",
-
+                            Id = "f851d025-4f8f-4488-8ec4-dafa9c3bbe4f",
+                            ConcurrencyStamp = "2459ff98-dc95-4c40-93b5-a65fcca26b7f",
                             Name = "Renter",
                             NormalizedName = "RENTER"
                         },
                         new
                         {
-                            Id = "7c478f07-33af-445f-b9dd-810fb24448b4",
-                            ConcurrencyStamp = "26713184-d0e0-40d0-a3ce-1798bb709343",
-
+                            Id = "2f63eb1e-a951-4967-87a8-e28601d2f358",
+                            ConcurrencyStamp = "3120750e-081b-440f-9c82-2dae7184280e",
                             Name = "Leaseholder",
                             NormalizedName = "LEASEHOLDER"
                         });
