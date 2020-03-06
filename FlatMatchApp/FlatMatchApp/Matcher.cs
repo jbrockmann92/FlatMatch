@@ -1,4 +1,5 @@
-﻿using FlatMatchApp.Models;
+﻿using FlatMatchApp.Data;
+using FlatMatchApp.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,12 @@ namespace FlatMatchApp
     public class Matcher
     {
         //Create algorithm here
-        
+        private readonly ApplicationDbContext _context;
+        public Matcher(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
 
         public Leaseholder MatchUsers(Renter renter)
         {
@@ -20,6 +26,8 @@ namespace FlatMatchApp
             //Will be a series of values, 1-5, that I will use to match the same values together
             //How to make sure that the list doesn't just choose however may they have in their list of prefs
             //and match [0] to [0], etc., and end up matching two different types of pref?
+
+            
 
             //The closer their numbers are, the closer they are to a match.
             //Divide their score by their total number of preferences, the closer they are to 1, the higher

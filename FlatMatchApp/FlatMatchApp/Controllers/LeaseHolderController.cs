@@ -80,11 +80,11 @@ namespace FlatMatchApp.Controllers
                 Leaseholder editLeaseholder = _context.Leaseholders.Find(id);
                 editLeaseholder.FirstName = leaseholder.FirstName;
                 editLeaseholder.LastName = leaseholder.LastName;
-                editLeaseholder.Address.StreetName = leaseholder.Address.StreetName;
-                editLeaseholder.Address.ApartmentNumber = leaseholder.Address.ApartmentNumber;
-                editLeaseholder.Address.City = leaseholder.Address.City;
-                editLeaseholder.Address.State = leaseholder.Address.State;
-                editLeaseholder.Address.ZipCode = leaseholder.Address.ZipCode;
+                //editLeaseholder.Address.StreetName = leaseholder.Address.StreetName;
+                //editLeaseholder.Address.ApartmentNumber = leaseholder.Address.ApartmentNumber;
+                //editLeaseholder.Address.City = leaseholder.Address.City;
+                //editLeaseholder.Address.State = leaseholder.Address.State;
+                //editLeaseholder.Address.ZipCode = leaseholder.Address.ZipCode;
             }
 
                 return RedirectToAction(nameof(Index));
