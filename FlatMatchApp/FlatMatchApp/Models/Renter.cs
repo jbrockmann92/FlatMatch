@@ -13,8 +13,10 @@ namespace FlatMatchApp.Models
         [Key]
         public int Id { get; set; }
         [Required]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
         [Required]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
         [ForeignKey("IdentityUser")]
         [Display(Name = "Identity User")]
@@ -23,6 +25,10 @@ namespace FlatMatchApp.Models
 
         [NotMapped]
         public List<Preference> Preferences { get; set; }
+
+        public string FacebookSocial { get; set; }
+        public string InstagramSocial { get; set; }
+        public string TwitterSocial { get; set; }
 
     }
 }
