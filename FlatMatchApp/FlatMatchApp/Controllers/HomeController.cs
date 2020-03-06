@@ -18,8 +18,8 @@ namespace FlatMatchApp.Controllers
         {
             _logger = logger;
         }
-
-        public IActionResult Index()
+        
+        public IActionResult Index()   //A.Sanchez Added redirect
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId == null)
