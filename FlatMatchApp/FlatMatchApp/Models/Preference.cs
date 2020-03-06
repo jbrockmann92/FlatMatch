@@ -12,6 +12,6 @@ namespace FlatMatchApp.Models
         [Key]
         public int Id { get; set; }
         public bool Exists { get; set; }
-        public bool Value { get; set; }
+        public int Value { get; set; }
     }
 }
