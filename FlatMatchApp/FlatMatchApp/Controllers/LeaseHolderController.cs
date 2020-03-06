@@ -92,26 +92,32 @@ namespace FlatMatchApp.Controllers
         }
 
         // GET: LeaseHolder/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            var leaseholder = _context.Leaseholders.Include(l => l.Property).FirstOrDefault(l => l.Id == id);
+
+            if(leaseholder == null)
+            {
+                return NotFound();
+            }
+
+            return View(leaseholder);
         }
 
         // POST: LeaseHolder/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var leaseholder = _context.Leaseholders.Find(id);
+            _context.Leaseholders.Remove(leaseholder);
+            _context.SaveChanges();
+            return Redirect("Index");
         }
     }
 }
