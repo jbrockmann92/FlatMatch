@@ -4,20 +4,18 @@ using FlatMatchApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace FlatMatchApp.Data.Migrations
+namespace FlatMatchApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200306155756_ChangedPropertiesInPreferenceModelAndAddedUserPreferencesModel")]
-    partial class ChangedPropertiesInPreferenceModelAndAddedUserPreferencesModel
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.1")
+                .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -98,6 +96,58 @@ namespace FlatMatchApp.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Preferences");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Activity"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Smoking"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Drinking"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Bedtime"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Noise Level"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Washer/Dryer"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "GymInBuilding"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Cleanliness"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Food"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Extravert/Introvert"
+                        });
                 });
 
             modelBuilder.Entity("FlatMatchApp.Models.Property", b =>
@@ -138,12 +188,21 @@ namespace FlatMatchApp.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("FacebookSocial")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("InstagramSocial")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LastName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TwitterSocial")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
@@ -154,6 +213,27 @@ namespace FlatMatchApp.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Renters");
+                });
+
+            modelBuilder.Entity("FlatMatchApp.Models.UserPreferences", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("PreferenceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserPreferences");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -185,15 +265,15 @@ namespace FlatMatchApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e6ac571b-8f35-46db-aade-3ed8df33de6d",
-                            ConcurrencyStamp = "765de06a-fabf-4d50-8c8f-1853c96d3b07",
+                            Id = "a84e567a-c166-4640-b98c-390fd5258010",
+                            ConcurrencyStamp = "bd90672e-a553-4362-be74-ef00d088034a",
                             Name = "Renter",
                             NormalizedName = "RENTER"
                         },
                         new
                         {
-                            Id = "7c478f07-33af-445f-b9dd-810fb24448b4",
-                            ConcurrencyStamp = "26713184-d0e0-40d0-a3ce-1798bb709343",
+                            Id = "9cb9955b-2691-4401-8701-9fcf7b1ca426",
+                            ConcurrencyStamp = "17a8a7c3-cd41-44fd-a0c1-a04e65b61aa1",
                             Name = "Leaseholder",
                             NormalizedName = "LEASEHOLDER"
                         });

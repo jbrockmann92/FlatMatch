@@ -28,6 +28,13 @@ namespace FlatMatchApp
             //Need returned from the search an array of the full length of the number of search terms, with
             //a 0 or something in each place they didn't check the box?
 
+            //No I don't. Just need to check each one's id in the junction table and see if it's there. Then I can do all that stuff in here
+
+            //Add weight to the preference table? They can choose from a list of 1-5 how important the given preference is to them
+
+            //Probably want to use some ternaries in the algorithm
+
+
 
 
             return leaseholder;

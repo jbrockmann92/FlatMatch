@@ -10,6 +10,7 @@ namespace FlatMatchApp.Models
     {
         [Key]
         public int Id { get; set; }
+        //Probably won't ever use the Key in the actual program
         public int UserId { get; set; }
         public int PreferenceId { get; set; }
         public int Value { get; set; }
