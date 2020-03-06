@@ -4,14 +4,16 @@ using FlatMatchApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FlatMatchApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200306155756_ChangedPropertiesInPreferenceModelAndAddedUserPreferencesModel")]
+    partial class ChangedPropertiesInPreferenceModelAndAddedUserPreferencesModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,21 +92,9 @@ namespace FlatMatchApp.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-<<<<<<< HEAD
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-=======
-                    b.Property<bool>("Exists")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("int");
-
->>>>>>> 76522987fb67db76f23c8bc54287479d1c7cca18
                     b.HasKey("Id");
 
                     b.ToTable("Preferences");
@@ -148,32 +138,14 @@ namespace FlatMatchApp.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-<<<<<<< HEAD
-=======
-                    b.Property<string>("FacebookSocial")
-                        .HasColumnType("nvarchar(max)");
-
->>>>>>> 76522987fb67db76f23c8bc54287479d1c7cca18
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<< HEAD
-=======
-                    b.Property<string>("InstagramSocial")
-                        .HasColumnType("nvarchar(max)");
-
->>>>>>> 76522987fb67db76f23c8bc54287479d1c7cca18
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<< HEAD
-=======
-                    b.Property<string>("TwitterSocial")
-                        .HasColumnType("nvarchar(max)");
-
->>>>>>> 76522987fb67db76f23c8bc54287479d1c7cca18
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -213,25 +185,15 @@ namespace FlatMatchApp.Data.Migrations
                     b.HasData(
                         new
                         {
-<<<<<<< HEAD
                             Id = "e6ac571b-8f35-46db-aade-3ed8df33de6d",
                             ConcurrencyStamp = "765de06a-fabf-4d50-8c8f-1853c96d3b07",
-=======
-                            Id = "327d0555-df2e-46ce-ac87-7fdcd23a1a85",
-                            ConcurrencyStamp = "198f1a6c-bb0e-41bb-b156-318ba625f613",
->>>>>>> 76522987fb67db76f23c8bc54287479d1c7cca18
                             Name = "Renter",
                             NormalizedName = "RENTER"
                         },
                         new
                         {
-<<<<<<< HEAD
                             Id = "7c478f07-33af-445f-b9dd-810fb24448b4",
                             ConcurrencyStamp = "26713184-d0e0-40d0-a3ce-1798bb709343",
-=======
-                            Id = "965a4ac6-cf3a-470c-8180-bd8684968f50",
-                            ConcurrencyStamp = "1dec57fe-9ce8-4a7c-91c3-b99aede4270f",
->>>>>>> 76522987fb67db76f23c8bc54287479d1c7cca18
                             Name = "Leaseholder",
                             NormalizedName = "LEASEHOLDER"
                         });
