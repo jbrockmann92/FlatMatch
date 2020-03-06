@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,16 +10,17 @@ namespace FlatMatchApp.Models
     {
         [Key]
         public int Id { get; set; }
+        public string Activities { get; set; }
         [Required]
-        public string StreetName { get; set; }
+        public double SquareFootage { get; set; }
         [Required]
-        public string ApartmentNumber { get; set; }
+        public double Price { get; set; }
         [Required]
-        public string City { get; set; }
+        public string Type { get; set; }
         [Required]
-        public string State { get; set; }
-        [Required]
-        [DataType(DataType.PostalCode)]
-        public string ZipCode { get; set; }
+        public int NumberBedrooms { get; set; }
+
+        public bool isAvailable { get; set; }
+
     }
 }
