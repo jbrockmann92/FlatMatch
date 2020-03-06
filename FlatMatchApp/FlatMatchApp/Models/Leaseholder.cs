@@ -23,5 +23,8 @@ namespace FlatMatchApp.Models
         [Display(Name = "Identity User")]
         public string UserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
+
+        [NotMapped]
+        public List<Preference> preferences { get; set; }
     }
 }

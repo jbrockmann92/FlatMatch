@@ -8,6 +8,6 @@ namespace FlatMatchApp.Models
     public class Preference
     {
         public bool Exists { get; set; }
-        public bool Value { get; set; }
+        public int Value { get; set; }
     }
 }
