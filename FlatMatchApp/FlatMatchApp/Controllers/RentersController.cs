@@ -9,6 +9,7 @@ using FlatMatchApp.Data;
 using FlatMatchApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using FlatMatchApp.ActionFilters;
+using System.Security.Claims;
 
 namespace FlatMatchApp.Controllers
 {
@@ -26,8 +27,14 @@ namespace FlatMatchApp.Controllers
         // GET: Renters
         public ActionResult Index()
         {
-            var applicationDbContext = _context.Renters.Include(r => r.IdentityUser);
-            return View(applicationDbContext.ToList());
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var renter = _context.Renters.FirstOrDefault(a => a.UserId == userId);
+            if (renter is null)
+            {
+                return RedirectToAction("Create");
+            }
+            
+            return RedirectToAction("Edit");
         }
 
         // GET: Renters/Details/5
@@ -52,7 +59,7 @@ namespace FlatMatchApp.Controllers
         // GET: Renters/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id"); A.Sanchez: Following format of trashcollector project, we can connect as needed
             return View();
         }
 
@@ -61,16 +68,34 @@ namespace FlatMatchApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,UserId")] Renter renter)
+        //public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,UserId")] Renter renter) 
+        //Above is original code.  A.Sanchez: Using simpler method from trashcollector, let me know if you have questions
+        public IActionResult Create(RenterViewModel renterViewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(renter);
-                await _context.SaveChangesAsync();
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var renter = renterViewModel.Renter;
+                renter.UserId = userId;
+                var preferences = renterViewModel.Preferences;
+                for (int i = 0; i < preferences.Count; i++)
+                {
+                    var newPreferences = new UserPreferences();
+                    newPreferences.PreferenceId = preferences[i].Id;
+                    newPreferences.UserId =  int.Parse(userId);  //we should have this be a string instead, otherwise we will have to use the intparse or converttoint every time
+                    //newPreferences.Value = preferences[i]; in order for this method to work, we either need a table attached to the renter that has actual values, 
+
+                }
+
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
+
+                
+
+                
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", renter.UserId);
-            return View(renter);
+            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", renter.UserId);
+            return View(renterViewModel);
         }
 
         // GET: Renters/Edit/5
