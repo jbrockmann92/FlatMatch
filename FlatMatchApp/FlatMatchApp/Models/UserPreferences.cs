@@ -4,14 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 namespace FlatMatchApp.Models
 {
-    public class Preference
+    public class UserPreferences
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
-        //Might not need name for actual usage, but should be helpful
+        public int UserId { get; set; }
+        public int PreferenceId { get; set; }
+        public int Value { get; set; }
     }
 }
