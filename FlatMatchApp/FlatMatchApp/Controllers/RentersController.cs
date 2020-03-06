@@ -2,92 +2,159 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using FlatMatchApp.Data;
+using FlatMatchApp.Models;
 
 namespace FlatMatchApp.Controllers
 {
     public class RentersController : Controller
     {
-        // GET: Renters
-        public ActionResult Index()
+        private readonly ApplicationDbContext _context;
+
+        public RentersController(ApplicationDbContext context)
         {
-            return View();
+            _context = context;
+        }
+
+        // GET: Renters
+        public async Task<IActionResult> Index()
+        {
+            var applicationDbContext = _context.Renters.Include(r => r.IdentityUser);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Renters/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var renter = await _context.Renters
+                .Include(r => r.IdentityUser)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (renter == null)
+            {
+                return NotFound();
+            }
+
+            return View(renter);
         }
 
         // GET: Renters/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
         // POST: Renters/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,UserId")] Renter renter)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
+                _context.Add(renter);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", renter.UserId);
+            return View(renter);
         }
 
         // GET: Renters/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var renter = await _context.Renters.FindAsync(id);
+            if (renter == null)
+            {
+                return NotFound();
+            }
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", renter.UserId);
+            return View(renter);
         }
 
         // POST: Renters/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,UserId")] Renter renter)
         {
-            try
+            if (id != renter.Id)
             {
-                // TODO: Add update logic here
+                return NotFound();
+            }
 
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(renter);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!RenterExists(renter.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", renter.UserId);
+            return View(renter);
         }
 
         // GET: Renters/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var renter = await _context.Renters
+                .Include(r => r.IdentityUser)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (renter == null)
+            {
+                return NotFound();
+            }
+
+            return View(renter);
         }
 
         // POST: Renters/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            var renter = await _context.Renters.FindAsync(id);
+            _context.Renters.Remove(renter);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+        private bool RenterExists(int id)
+        {
+            return _context.Renters.Any(e => e.Id == id);
         }
     }
 }
