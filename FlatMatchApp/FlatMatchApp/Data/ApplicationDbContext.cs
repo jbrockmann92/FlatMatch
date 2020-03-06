@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using FlatMatchApp.Models;
 
 namespace FlatMatchApp.Data
 {
@@ -32,5 +33,10 @@ namespace FlatMatchApp.Data
 
                 );
         }
+        public DbSet<Renter> Renters { get; set; }
+        public DbSet<Leaseholder> Leaseholders { get; set; }
+        public DbSet<Property> Properties { get; set; }
+        public DbSet <Address> Addresses { get; set; }
+        public DbSet <Preference> Preferences { get; set; }
     }
 }

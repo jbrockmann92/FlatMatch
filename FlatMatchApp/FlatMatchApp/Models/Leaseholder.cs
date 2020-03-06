@@ -18,7 +18,7 @@ namespace FlatMatchApp.Models
         public string LastName { get; set; }
         [ForeignKey("Property")]
         public int PropertyId { get; set; }
-        public Property Address { get; set; }
+        public Address Address { get; set; }
         [ForeignKey("IdentityUser")]
         [Display(Name = "Identity User")]
         public string UserId { get; set; }
