@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using FlatMatchApp.Models;
+using System.Security.Claims;
 
 namespace FlatMatchApp.Controllers
 {
@@ -17,9 +18,23 @@ namespace FlatMatchApp.Controllers
         {
             _logger = logger;
         }
-
-        public IActionResult Index()
+        
+        public IActionResult Index()   //A.Sanchez Added redirect
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Redirect("./Identity/Account/Login");
+            }
+            if (User.IsInRole("Renter"))
+            {
+                //Employee employee = 
+                return Redirect("./Renter/Index");
+            }
+            else if (User.IsInRole("Leaseholder"))
+            {
+                return Redirect("./Leaseholder/Index");
+            }
             return View();
         }
 

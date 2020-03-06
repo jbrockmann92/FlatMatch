@@ -4,185 +4,22 @@ using FlatMatchApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FlatMatchApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200306144041_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.1")
+                .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("FlatMatchApp.Models.Address", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ApartmentNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StreetName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ZipCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Addresses");
-                });
-
-            modelBuilder.Entity("FlatMatchApp.Models.Leaseholder", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AddressId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PropertyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Leaseholders");
-                });
-
-            modelBuilder.Entity("FlatMatchApp.Models.Preference", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-<<<<<<< HEAD
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-=======
-                    b.Property<bool>("Exists")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("int");
-
->>>>>>> 76522987fb67db76f23c8bc54287479d1c7cca18
-                    b.HasKey("Id");
-
-                    b.ToTable("Preferences");
-                });
-
-            modelBuilder.Entity("FlatMatchApp.Models.Property", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Activities")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumberBedrooms")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<double>("SquareFootage")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isAvailable")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Properties");
-                });
-
-            modelBuilder.Entity("FlatMatchApp.Models.Renter", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-<<<<<<< HEAD
-=======
-                    b.Property<string>("FacebookSocial")
-                        .HasColumnType("nvarchar(max)");
-
->>>>>>> 76522987fb67db76f23c8bc54287479d1c7cca18
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-<<<<<<< HEAD
-=======
-                    b.Property<string>("InstagramSocial")
-                        .HasColumnType("nvarchar(max)");
-
->>>>>>> 76522987fb67db76f23c8bc54287479d1c7cca18
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-<<<<<<< HEAD
-=======
-                    b.Property<string>("TwitterSocial")
-                        .HasColumnType("nvarchar(max)");
-
->>>>>>> 76522987fb67db76f23c8bc54287479d1c7cca18
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Renters");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -213,25 +50,15 @@ namespace FlatMatchApp.Data.Migrations
                     b.HasData(
                         new
                         {
-<<<<<<< HEAD
-                            Id = "e6ac571b-8f35-46db-aade-3ed8df33de6d",
-                            ConcurrencyStamp = "765de06a-fabf-4d50-8c8f-1853c96d3b07",
-=======
-                            Id = "327d0555-df2e-46ce-ac87-7fdcd23a1a85",
-                            ConcurrencyStamp = "198f1a6c-bb0e-41bb-b156-318ba625f613",
->>>>>>> 76522987fb67db76f23c8bc54287479d1c7cca18
+                            Id = "b3fcbf74-7a3c-4b8b-ac12-a175c7925bca",
+                            ConcurrencyStamp = "85184239-1cfb-49b8-9721-a4e834c17e8f",
                             Name = "Renter",
                             NormalizedName = "RENTER"
                         },
                         new
                         {
-<<<<<<< HEAD
-                            Id = "7c478f07-33af-445f-b9dd-810fb24448b4",
-                            ConcurrencyStamp = "26713184-d0e0-40d0-a3ce-1798bb709343",
-=======
-                            Id = "965a4ac6-cf3a-470c-8180-bd8684968f50",
-                            ConcurrencyStamp = "1dec57fe-9ce8-4a7c-91c3-b99aede4270f",
->>>>>>> 76522987fb67db76f23c8bc54287479d1c7cca18
+                            Id = "2aab83c1-92ff-44d6-af5b-0cd1d30cb8ce",
+                            ConcurrencyStamp = "e92cb027-9796-4f5e-b1a5-2be356790261",
                             Name = "Leaseholder",
                             NormalizedName = "LEASEHOLDER"
                         });
@@ -404,24 +231,6 @@ namespace FlatMatchApp.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("FlatMatchApp.Models.Leaseholder", b =>
-                {
-                    b.HasOne("FlatMatchApp.Models.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId");
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("FlatMatchApp.Models.Renter", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
