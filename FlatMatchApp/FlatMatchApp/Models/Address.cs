@@ -13,7 +13,9 @@ namespace FlatMatchApp.Models
         [Key]
         public int Id { get; set; }
         [Required]
+        [Display(Name = "Street")]
         public string StreetName { get; set; }
+        [Display(Name = "City")]
         public string ApartmentNumber { get; set; }
         [Required]
         public string City { get; set; }
@@ -21,6 +23,7 @@ namespace FlatMatchApp.Models
         public string State { get; set; }
         [Required]
         [DataType(DataType.PostalCode)]
+        [Display(Name = "Zip Code")]
         public string ZipCode { get; set; }
     }
 }
