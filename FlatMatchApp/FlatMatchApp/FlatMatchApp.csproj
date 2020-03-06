@@ -6,16 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\Migrations\20200306162627_SetSoUserPreferencesMapsToDb.cs" />
-    <Compile Remove="Data\Migrations\20200306162627_SetSoUserPreferencesMapsToDb.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200306163253_SetSoUserPreferencesMapsToDb.cs" />
-    <Compile Remove="Data\Migrations\20200306163253_SetSoUserPreferencesMapsToDb.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200306163557_SetSoUserPreferencesMapsToDb.cs" />
-    <Compile Remove="Data\Migrations\20200306163557_SetSoUserPreferencesMapsToDb.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200306171106_SetSoUserPreferencesMapsToDb.cs" />
-    <Compile Remove="Data\Migrations\20200306171106_SetSoUserPreferencesMapsToDb.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200306171724_SetSoUserPreferencesMapsToDb.cs" />
-    <Compile Remove="Data\Migrations\20200306171724_SetSoUserPreferencesMapsToDb.Designer.cs" />
+    <Content Include="bin\Debug\netcoreapp3.1\appsettings.Development.json" />
+    <Content Include="bin\Debug\netcoreapp3.1\appsettings.json" />
+    <Content Include="bin\Debug\netcoreapp3.1\FlatMatchApp.deps.json" />
+    <Content Include="bin\Debug\netcoreapp3.1\FlatMatchApp.runtimeconfig.dev.json" />
+    <Content Include="bin\Debug\netcoreapp3.1\FlatMatchApp.runtimeconfig.json" />
+    <Content Include="bin\Debug\netcoreapp3.1\FlatMatchApp.StaticWebAssets.xml" />
+    <Content Include="bin\Debug\netcoreapp3.1\Properties\launchSettings.json" />
   </ItemGroup>
 
 
