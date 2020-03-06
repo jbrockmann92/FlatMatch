@@ -20,10 +20,10 @@ namespace FlatMatchApp.Controllers
         }
 
         // GET: Renters
-        public async Task<IActionResult> Index()
+        public ActionResult Index()
         {
             var applicationDbContext = _context.Renters.Include(r => r.IdentityUser);
-            return View(await applicationDbContext.ToListAsync());
+            return View(applicationDbContext.ToList());
         }
 
         // GET: Renters/Details/5
