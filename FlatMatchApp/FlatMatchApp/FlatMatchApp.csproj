@@ -5,16 +5,6 @@
     <UserSecretsId>aspnet-FlatMatchApp-0C3F9206-0830-4CF2-A8E9-00FD5BB72B42</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="bin\Debug\netcoreapp3.1\appsettings.Development.json" />
-    <Content Include="bin\Debug\netcoreapp3.1\appsettings.json" />
-    <Content Include="bin\Debug\netcoreapp3.1\FlatMatchApp.deps.json" />
-    <Content Include="bin\Debug\netcoreapp3.1\FlatMatchApp.runtimeconfig.dev.json" />
-    <Content Include="bin\Debug\netcoreapp3.1\FlatMatchApp.runtimeconfig.json" />
-    <Content Include="bin\Debug\netcoreapp3.1\FlatMatchApp.StaticWebAssets.xml" />
-    <Content Include="bin\Debug\netcoreapp3.1\Properties\launchSettings.json" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />
