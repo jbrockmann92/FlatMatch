@@ -26,5 +26,9 @@ namespace FlatMatchApp.Models
         [NotMapped]
         public List<Preference> Preferences { get; set; }
 
+        public string FacebookSocial { get; set; }
+        public string InstagramSocial { get; set; }
+        public string TwitterSocial { get; set; }
+
     }
 }
