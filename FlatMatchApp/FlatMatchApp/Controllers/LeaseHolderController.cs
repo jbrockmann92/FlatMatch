@@ -1,70 +1,94 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using FlatMatchApp.Data;
+using FlatMatchApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FlatMatchApp.Controllers
 {
-    public class LeaseHolderController : Controller
+    public class LeaseholderController : Controller
     {
-        // GET: LeaseHolder
-        public ActionResult Index()
+        private readonly ApplicationDbContext _context;
+        public LeaseholderController(ApplicationDbContext context)
         {
-            return View();
+            _context = context;
+        }
+
+        // GET: LeaseHolder
+        public IActionResult Index() //RP
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var leaseholder = _context.Leaseholders.FirstOrDefault(l => l.UserId == userId);
+            if(leaseholder == null)
+            {
+                return NotFound();
+            }
+            return View(leaseholder);
         }
 
         // GET: LeaseHolder/Details/5
-        public ActionResult Details(int id)
+        [HttpGet]
+        public IActionResult Details(int id)
         {
-            return View();
+            var leaseholder = _context.Leaseholders.SingleOrDefault(x => x.Id == id);
+            return View(leaseholder);
         }
-
         // GET: LeaseHolder/Create
-        public ActionResult Create()
+        [HttpGet]
+        public IActionResult Create()
         {
-            return View();
+            var leaseholder = new Leaseholder();
+            return View(leaseholder);
         }
 
         // POST: LeaseHolder/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Create(Leaseholder leaseholder)
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            leaseholder.UserId = userId;
+            _context.Leaseholders.Add(leaseholder);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: LeaseHolder/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id) //RP
         {
-            return View();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var leaseholder = _context.Leaseholders.FirstOrDefault(l => l.UserId == userId);
+            return View(leaseholder);
         }
 
         // POST: LeaseHolder/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, [Bind("FirstName,LastName")] Leaseholder leaseholder) //RP
         {
-            try
+            if (id != leaseholder.Id)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
             {
                 // TODO: Add update logic here
+                Leaseholder editLeaseholder = _context.Leaseholders.Find(id);
+                editLeaseholder.FirstName = leaseholder.FirstName;
+                editLeaseholder.LastName = leaseholder.LastName;
+                editLeaseholder.Address.StreetName = leaseholder.Address.StreetName;
+                editLeaseholder.Address.ApartmentNumber = leaseholder.Address.ApartmentNumber;
+                editLeaseholder.Address.City = leaseholder.Address.City;
+                editLeaseholder.Address.State = leaseholder.Address.State;
+                editLeaseholder.Address.ZipCode = leaseholder.Address.ZipCode;
+            }
 
                 return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            
         }
 
         // GET: LeaseHolder/Delete/5

@@ -93,6 +93,10 @@ namespace FlatMatchApp.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+<<<<<<< HEAD:FlatMatchApp/FlatMatchApp/Migrations/ApplicationDbContextModelSnapshot.cs
+=======
+
+>>>>>>> 3d4a18d2d5df395c451039f82d5bfcda825db81c:FlatMatchApp/FlatMatchApp/Data/Migrations/ApplicationDbContextModelSnapshot.cs
                     b.HasKey("Id");
 
                     b.ToTable("Preferences");
@@ -195,9 +199,15 @@ namespace FlatMatchApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+<<<<<<< HEAD:FlatMatchApp/FlatMatchApp/Migrations/ApplicationDbContextModelSnapshot.cs
                     b.Property<string>("InstagramSocial")
                         .HasColumnType("nvarchar(max)");
 
+=======
+
+                    b.Property<string>("InstagramSocial")
+                        .HasColumnType("nvarchar(max)");
+>>>>>>> 3d4a18d2d5df395c451039f82d5bfcda825db81c:FlatMatchApp/FlatMatchApp/Data/Migrations/ApplicationDbContextModelSnapshot.cs
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -265,15 +275,27 @@ namespace FlatMatchApp.Migrations
                     b.HasData(
                         new
                         {
+<<<<<<< HEAD:FlatMatchApp/FlatMatchApp/Migrations/ApplicationDbContextModelSnapshot.cs
                             Id = "a84e567a-c166-4640-b98c-390fd5258010",
                             ConcurrencyStamp = "bd90672e-a553-4362-be74-ef00d088034a",
+=======
+                            Id = "e6ac571b-8f35-46db-aade-3ed8df33de6d",
+                            ConcurrencyStamp = "765de06a-fabf-4d50-8c8f-1853c96d3b07",
+
+>>>>>>> 3d4a18d2d5df395c451039f82d5bfcda825db81c:FlatMatchApp/FlatMatchApp/Data/Migrations/ApplicationDbContextModelSnapshot.cs
                             Name = "Renter",
                             NormalizedName = "RENTER"
                         },
                         new
                         {
+<<<<<<< HEAD:FlatMatchApp/FlatMatchApp/Migrations/ApplicationDbContextModelSnapshot.cs
                             Id = "9cb9955b-2691-4401-8701-9fcf7b1ca426",
                             ConcurrencyStamp = "17a8a7c3-cd41-44fd-a0c1-a04e65b61aa1",
+=======
+                            Id = "7c478f07-33af-445f-b9dd-810fb24448b4",
+                            ConcurrencyStamp = "26713184-d0e0-40d0-a3ce-1798bb709343",
+
+>>>>>>> 3d4a18d2d5df395c451039f82d5bfcda825db81c:FlatMatchApp/FlatMatchApp/Data/Migrations/ApplicationDbContextModelSnapshot.cs
                             Name = "Leaseholder",
                             NormalizedName = "LEASEHOLDER"
                         });
