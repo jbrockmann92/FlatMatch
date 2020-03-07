@@ -33,6 +33,8 @@ namespace FlatMatchApp
             //Divide their score by their total number of preferences, the closer they are to 1, the higher
             //that leaseholder shows up on the list?
 
+            //Some kind of sort algorithm to put the highest leaseholders at the beginning of the list. But only return according to certain criteria
+
             //Need returned from the search an array of the full length of the number of search terms, with
             //a 0 or something in each place they didn't check the box?
 

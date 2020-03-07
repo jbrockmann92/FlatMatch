@@ -74,9 +74,12 @@ namespace FlatMatchApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Right now the var value that's assigned is only an int, not a list of ints. Probably something we'll
+                //have to go over on Monday. The junction table is something that none of us have done before,
+                //so it will take some getting used to
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var renter = renterViewModel.Renter;
-                var values = renterViewModel.Values;
+                var value = renterViewModel.Value; //Only holds an int, but the code was trying to use it as a collection in the for loop below
                 renter.UserId = userId;
                 _context.Renters.Add(renter);
                 var preferences = renterViewModel.Preferences;
@@ -85,7 +88,7 @@ namespace FlatMatchApp.Controllers
                     var newPreferences = new UserPreferences();
                     newPreferences.PreferenceId = preferences[i].Id;
                     newPreferences.UserId =  int.Parse(userId);  //we should have this be a string instead, otherwise we will have to use the intparse or converttoint every time
-                    newPreferences.Value = values[i];
+                    newPreferences.Value = value;
                     _context.UserPreferences.Add(newPreferences);
                     //added list of ints to renter view controller in order to 
                     //be able to capture value to be stored in preferences
