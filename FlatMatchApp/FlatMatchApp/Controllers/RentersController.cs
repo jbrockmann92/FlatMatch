@@ -76,15 +76,21 @@ namespace FlatMatchApp.Controllers
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var renter = renterViewModel.Renter;
+                var values = renterViewModel.Values;
                 renter.UserId = userId;
+                _context.Renters.Add(renter);
                 var preferences = renterViewModel.Preferences;
                 for (int i = 0; i < preferences.Count; i++)
                 {
                     var newPreferences = new UserPreferences();
                     newPreferences.PreferenceId = preferences[i].Id;
                     newPreferences.UserId =  int.Parse(userId);  //we should have this be a string instead, otherwise we will have to use the intparse or converttoint every time
-                    //newPreferences.Value = preferences[i]; in order for this method to work, we either need a table attached to the renter that has actual values, 
-
+                    newPreferences.Value = values[i];
+                    _context.UserPreferences.Add(newPreferences);
+                    //added list of ints to renter view controller in order to 
+                    //be able to capture value to be stored in preferences
+                    //This method takes up a lot of space/memory, I suggest we simply add preferences to the renter model
+                    //or create a second table that hangs onto all prerences at once along with each individual value instead.
                 }
 
                 _context.SaveChanges();
