@@ -22,16 +22,12 @@ namespace FlatMatchApp
         public List<Leaseholder> MatchUsers(Renter renter, string Zip) //This means we'll have to have both a renter and a Zip passed into this method
         {
             var leaseholders = _context.Leaseholders.ToList().Where(l => l.Property.Address.ZipCode == Zip).ToList();
-            //Might have to assign the property and address properties based on their ids if they're not stored as they should in db
 
             List<Leaseholder> finalLeaseholders = new List<Leaseholder>();
-            List<Leaseholder> tempLeaseholders = new List<Leaseholder>();
+            List<int[,]> tempLeaseholders = new List<int[,]>();
             int leaseholderValue = 0;
             int[,] holder_score = new int[leaseholders.Count,2];
-            //Do I still need this?
             var rPrefs = renter.Preferences;
-
-            //Need to decide if we will have Zip as a property of the renter model or leave off and pass in a different way
 
             for (int i = 0; i < leaseholders.Count; i++)
             {
@@ -43,23 +39,33 @@ namespace FlatMatchApp
                     var rPrefsValue = _context.UserPreferences.Where(u => u.UserId == rPrefs[j].Id).FirstOrDefault().Value;
 
                     leaseholderValue += Math.Abs(lPrefsValue - rPrefsValue);
-
-                    holder_score[j, i] = leaseholderValue;
-                    //Not quite right
                 }
-                
-                tempLeaseholders.Add(leaseholders[i]);
-                finalLeaseholders = SortLeaseholders(tempLeaseholders);
+
+                holder_score[i, 0] = leaseholderValue;
+                holder_score[i, 1] = leaseholders[i].Id;
+                tempLeaseholders.Add(holder_score);
             }
 
+        finalLeaseholders = SortLeaseholders(tempLeaseholders);
         return finalLeaseholders;
             //Might want to return a list or IQueryable of leaseholders. Or RedirectToAction("Index", IQueryable<Leaseholder>)
             //or something similar
         }
 
-        public List<Leaseholder> SortLeaseholders(List<Leaseholder> leaseholders)
-        { 
+        public List<Leaseholder> SortLeaseholders(List<int[,]> leaseholdersArrayList)
+        {
 
+            //Now sort in descending order according to the highest value, then grab the leaseholders that match those ids and put them into the list in order
+            //Probably a more efficient way to do this?
+            List<Leaseholder> leaseholders = new List<Leaseholder>();
+
+            var leaseholdersArrays = leaseholdersArrayList.OrderBy(l => l).ToList();
+
+            for (int i = 0; i < leaseholdersArrays.Count; i++)
+            {
+                var tempList = leaseholdersArrays[i];
+                leaseholders.Add(_context.Leaseholders.Where(l => l.Id == tempList[i,1]).FirstOrDefault());
+            }
 
             return leaseholders;
         }
