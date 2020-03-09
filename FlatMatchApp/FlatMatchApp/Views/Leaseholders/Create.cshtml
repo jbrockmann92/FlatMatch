@@ -1,4 +1,4 @@
-﻿@model FlatMatchApp.Models.Leaseholder
+﻿@model FlatMatchApp.Models.LeaseholdersViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -13,39 +13,69 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+                <label asp-for="Leaseholder.FirstName" class="control-label"></label>
+                <input asp-for="Leaseholder.FirstName" class="form-control" />
+                <span asp-validation-for="Leaseholder.FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+                <label asp-for="Leaseholder.LastName" class="control-label"></label>
+                <input asp-for="Leaseholder.LastName" class="form-control" />
+                <span asp-validation-for="Leaseholder.LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Property.Address.StreetName" class="control-label"></label>
-                <input asp-for="Property.Address.StreetName" class="form-control">
-                <span asp-validation-for="Property.Address.StreetName" class="text-danger"></span>
+                <label asp-for="Leaseholder.Property.Activities" class="control-label"></label>
+                <input asp-for="Leaseholder.Property.Activities" class="form-control">
+                <span asp-validation-for="Leaseholder.Property.Activities" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Property.Address.ApartmentNumber" class="control-label"></label>
-                <input asp-for="Property.Address.ApartmentNumber" class="form-control">
-                <span asp-validation-for="Property.Address.ApartmentNumber" class="text-danger"></span>
+                <label asp-for="Leaseholder.Property.SquareFootage" class="control-label"></label>
+                <input asp-for="Leaseholder.Property.SquareFootage" class="form-control">
+                <span asp-validation-for="Leaseholder.Property.SquareFootage" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Property.Address.City" class="control-label"></label>
-                <input asp-for="Property.Address.City" class="form-control">
-                <span asp-validation-for="Property.Address.City" class="text-danger"></span>
+                <label asp-for="Leaseholder.Property.Price" class="control-label"></label>
+                <input asp-for="Leaseholder.Property.Price" class="form-control">
+                <span asp-validation-for="Leaseholder.Property.Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Property.Address.State" class="control-label"></label>
-                <input asp-for="Property.Address.State" class="form-control">
-                <span asp-validation-for="Property.Address.State" class="text-danger"></span>
+                <label asp-for="Leaseholder.Property.Type" class="control-label"></label>
+                <input asp-for="Leaseholder.Property.Type" class="form-control">
+                <span asp-validation-for="Leaseholder.Property.Type" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Property.Address.ZipCode" class="control-label"></label>
-                <input asp-for="Property.Address.ZipCode" class="form-control">
-                <span asp-validation-for="Property.Address.ZipCode" class="text-danger"></span>
+                <label asp-for="Leaseholder.Property.NumberBedrooms" class="control-label"></label>
+                <input asp-for="Leaseholder.Property.NumberBedrooms" class="form-control">
+                <span asp-validation-for="Leaseholder.Property.NumberBedrooms" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Leaseholder.Property.isAvailable" class="control-label"></label>
+                <input asp-for="Leaseholder.Property.isAvailable" class="form-control">
+                <span asp-validation-for="Leaseholder.Property.isAvailable" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Leaseholder.Property.Address.StreetName" class="control-label"></label>
+                <input asp-for="Leaseholder.Property.Address.StreetName" class="form-control">
+                <span asp-validation-for="Leaseholder.Property.Address.StreetName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Leaseholder.Property.Address.ApartmentNumber" class="control-label"></label>
+                <input asp-for="Leaseholder.Property.Address.ApartmentNumber" class="form-control">
+                <span asp-validation-for="Leaseholder.Property.Address.ApartmentNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Leaseholder.Property.Address.City" class="control-label"></label>
+                <input asp-for="Leaseholder.Property.Address.City" class="form-control">
+                <span asp-validation-for="Leaseholder.Property.Address.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Leaseholder.Property.Address.State" class="control-label"></label>
+                <input asp-for="Leaseholder.Property.Address.State" class="form-control">
+                <span asp-validation-for="Leaseholder.Property.Address.State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Leaseholder.Property.Address.ZipCode" class="control-label"></label>
+                <input asp-for="Leaseholder.Property.Address.ZipCode" class="form-control">
+                <span asp-validation-for="Leaseholder.Property.Address.ZipCode" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
