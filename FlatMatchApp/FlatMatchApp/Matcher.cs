@@ -81,6 +81,7 @@ namespace FlatMatchApp
 
         public List<Leaseholder> SortLeaseholders(List<Leaseholder> leaseholders)
         {
+            return leaseholders;
             //Sort them in descending order so they can be returned and printed to the screen
         }
     }
