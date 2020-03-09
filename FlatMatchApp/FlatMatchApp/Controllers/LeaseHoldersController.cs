@@ -15,10 +15,10 @@ namespace FlatMatchApp.Controllers
 {
     //[ServiceFilter(typeof(GlobalRouting))]
     [Authorize(Roles = "Leaseholder")]
-    public class LeaseholderController : Controller
+    public class LeaseholdersController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public LeaseholderController(ApplicationDbContext context)
+        public LeaseholdersController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -30,9 +30,9 @@ namespace FlatMatchApp.Controllers
             var leaseholder = _context.Leaseholders.FirstOrDefault(l => l.UserId == userId);
             if(leaseholder == null)
             {
-                return View("Create");
+                return RedirectToAction("Create");
             }
-            return View(leaseholder);
+            return RedirectToAction("Details");
         }
 
         // GET: LeaseHolder/Details/5

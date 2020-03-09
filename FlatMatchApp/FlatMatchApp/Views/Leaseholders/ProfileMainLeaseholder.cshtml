@@ -1,0 +1,34 @@
+﻿@model FlatMatchApp.Models.Leaseholder
+
+@{
+    ViewData["Title"] = "ProfileMain";
+}
+
+<h1>ProfileMain</h1>
+<h3>Welcome, @Model.FirstName!</h3>
+<img src="@Model."
+@*Nothing done here so far. Need to make changes to make this into an actual profile page*@
+
+<div>
+    <h4>Leaseholder</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Preferences)
+        </dt>
+        <dd class="col-sm-10">
+            @{ 
+                foreach(Preference preference in Model.Preferences)
+                {
+                    Html.DisplayFor(model => model.Preferences);
+                    //Won't format correctly, but this is the basic idea
+                }
+            }
+            @*Currently null until we assign from the database using the junction table in the controller
+                Would be cool to give them the option to change preferences from here*@
+    </dl>
+    @*Probably want something here with their available room. At least a link to where they can see it?*@
+</div>
+<div>
+    <a asp-action="Index">Search</a>
+</div>
