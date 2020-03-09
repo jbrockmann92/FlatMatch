@@ -34,16 +34,18 @@ namespace FlatMatchApp.Data
                 );
 
             builder.Entity<Preference>().HasData(
-                    new Preference { Id = 1, Name = "Activity"},
-                    new Preference { Id = 2, Name = "Smoking"},
-                    new Preference { Id = 3, Name = "Drinking" },
-                    new Preference { Id = 4, Name = "Bedtime" },
-                    new Preference { Id = 5, Name = "Noise Level" },
-                    new Preference { Id = 6, Name = "Washer/Dryer" },
-                    new Preference { Id = 7, Name = "GymInBuilding" },
-                    new Preference { Id = 8, Name = "Cleanliness" },
-                    new Preference { Id = 9, Name = "Food" },
-                    new Preference { Id = 10, Name = "Extravert/Introvert" }
+                    new Preference { Id = 1, Name = "Smoking"},
+                    new Preference { Id = 2, Name = "Alcohol"},
+                    new Preference { Id = 3, Name = "Partying" },
+                    new Preference { Id = 4, Name = "WasherAndDryer" },
+                    new Preference { Id = 5, Name = "Cleanliness" },
+                    new Preference { Id = 6, Name = "SoundLevel" },
+                    new Preference { Id = 7, Name = "AC" },
+                    new Preference { Id = 8, Name = "Patio" },
+                    new Preference { Id = 9, Name = "Yard" },
+                    new Preference { Id = 10, Name = "Pool" },
+                    new Preference { Id = 11, Name = "Gym" }
+
                     //Can add an Importance property if time so the user can weight according to what matters most to them
                 );
         }

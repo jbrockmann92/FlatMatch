@@ -3,6 +3,7 @@ using FlatMatchApp.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,71 +19,55 @@ namespace FlatMatchApp
             _context = context;
         }
 
-
-        public List<Leaseholder> MatchUsers(Renter renter)
+        public List<Leaseholder> MatchUsers(Renter renter, string Zip) //This means we'll have to have both a renter and a Zip passed into this method
         {
-            var leaseholders = _context.Leaseholders.ToList();
+            var leaseholders = _context.Leaseholders.ToList().Where(l => l.Property.Address.ZipCode == Zip).ToList();
+
             List<Leaseholder> finalLeaseholders = new List<Leaseholder>();
-            int leaseholderValue;
+            List<int[,]> tempLeaseholders = new List<int[,]>();
+            int leaseholderValue = 0;
+            int[,] holder_score = new int[leaseholders.Count, 2];
+            var rPrefs = renter.Preferences;
 
-
-            //Will be a series of values, 1-5, that I will use to match the same values together
-            //How to make sure that the list doesn't just choose however may they have in their list of prefs
-            //and match [0] to [0], etc., and end up matching two different types of pref?
-
-            
-
-            //The closer their numbers are, the closer they are to a match.
-            //Divide their score by their total number of preferences, the closer they are to 1, the higher
-            //that leaseholder shows up on the list?
-
-            //Some kind of sort algorithm to put the highest leaseholders at the beginning of the list. But only return according to certain criteria
-
-            //Need returned from the search an array of the full length of the number of search terms, with
-            //a 0 or something in each place they didn't check the box?
-
-            //No I don't. Just need to check each one's id in the junction table and see if it's there. Then I can do all that stuff in here
-
-            //Add weight to the preference table? They can choose from a list of 1-5 how important the given preference is to them
-
-            //Probably want to use some ternaries in the algorithm
-
-            foreach (Leaseholder leaseholder in leaseholders)
+            for (int i = 0; i < leaseholders.Count; i++)
             {
-                foreach (Preference preference in leaseholder.Preferences)
+                var lPrefs = leaseholders[i].Preferences;
+
+                for (int j = 0; j < 12; j++)
                 {
-                    foreach (Preference renterPreference in renter.Preferences)
-                    {
-                        var renterPreferences = _context.UserPreferences.Where(p => p.UserId == renter.Id).ToList();
-                        var leaseholderPreferences = _context.UserPreferences.Where(p => p.UserId == leaseholder.Id).ToList();
-                        foreach (UserPreferences userPreference in renterPreferences)
-                        {
-                            foreach (UserPreferences leasePreference in leaseholderPreferences)
-                            {
-                                if (userPreference.Id == preference.Id)
-                                {
-                                    int value = Math.Abs(userPreference.Value - leasePreference.Value);
-                                    //Have to return and associate their score with the leaseholder. Array that holds the value and their id maybe?
-                                }
-                                else
-                                    continue;
-                                //Truly disgusting code, but should pretty much do what I need
-                            }
-                        }
-                    }
+                    var lPrefsValue = _context.UserPreferences.Where(p => p.Id == lPrefs[j].Id).FirstOrDefault().Value;
+                    var rPrefsValue = _context.UserPreferences.Where(u => u.UserId == rPrefs[j].Id.ToString()).FirstOrDefault().Value;
+
+                    leaseholderValue += Math.Abs(lPrefsValue - rPrefsValue);
                 }
+
+                holder_score[i, 0] = leaseholderValue;
+                holder_score[i, 1] = leaseholders[i].Id;
+                tempLeaseholders.Add(holder_score);
             }
 
-
-            return finalLeaseholders;
+        finalLeaseholders = SortLeaseholders(tempLeaseholders);
+        return finalLeaseholders;
             //Might want to return a list or IQueryable of leaseholders. Or RedirectToAction("Index", IQueryable<Leaseholder>)
             //or something similar
         }
 
-        public List<Leaseholder> SortLeaseholders(List<Leaseholder> leaseholders)
+        public List<Leaseholder> SortLeaseholders(List<int[,]> leaseholdersArrayList)
         {
+
+            //Now sort in descending order according to the highest value, then grab the leaseholders that match those ids and put them into the list in order
+            //Probably a more efficient way to do this?
+            List<Leaseholder> leaseholders = new List<Leaseholder>();
+
+            var leaseholdersArrays = leaseholdersArrayList.OrderBy(l => l).ToList();
+
+            for (int i = 0; i < leaseholdersArrays.Count; i++)
+            {
+                var tempList = leaseholdersArrays[i];
+                leaseholders.Add(_context.Leaseholders.Where(l => l.Id == tempList[i,1]).FirstOrDefault());
+            }
+
             return leaseholders;
-            //Sort them in descending order so they can be returned and printed to the screen
         }
     }
 }
