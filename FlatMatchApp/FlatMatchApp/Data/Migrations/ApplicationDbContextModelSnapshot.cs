@@ -65,6 +65,9 @@ namespace FlatMatchApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProfileUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PropertyId")
                         .HasColumnType("int");
 
@@ -204,6 +207,9 @@ namespace FlatMatchApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProfileUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TwitterSocial")
                         .HasColumnType("nvarchar(max)");
 
@@ -267,15 +273,15 @@ namespace FlatMatchApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1e0b9a11-c9e8-4bd7-a489-53d52786baca",
-                            ConcurrencyStamp = "d3327043-1d08-4bf8-b3a7-5ab5324e516d",
+                            Id = "cdb4ef11-be1b-40fb-a558-a95856c0688b",
+                            ConcurrencyStamp = "38c59e65-4a1e-4a0e-b4f7-9179121bbefb",
                             Name = "Renter",
                             NormalizedName = "RENTER"
                         },
                         new
                         {
-                            Id = "604244c1-96b2-4884-9f13-50e2d4e7d2e2",
-                            ConcurrencyStamp = "53b647b8-7d56-4261-96e8-644f30f2911f",
+                            Id = "bcfd324a-b3c7-4199-8287-6b04ec0f3fcb",
+                            ConcurrencyStamp = "7fc11a44-af25-454b-aa68-65452531463d",
                             Name = "Leaseholder",
                             NormalizedName = "LEASEHOLDER"
                         });

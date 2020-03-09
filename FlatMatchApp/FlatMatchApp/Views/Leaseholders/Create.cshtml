@@ -23,12 +23,29 @@
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PropertyId" class="control-label"></label>
-                <select asp-for="PropertyId" class ="form-control" asp-items="ViewBag.PropertyId"></select>
+                <label asp-for="Property.Address.StreetName" class="control-label"></label>
+                <input asp-for="Property.Address.StreetName" class="form-control">
+                <span asp-validation-for="Property.Address.StreetName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+                <label asp-for="Property.Address.ApartmentNumber" class="control-label"></label>
+                <input asp-for="Property.Address.ApartmentNumber" class="form-control">
+                <span asp-validation-for="Property.Address.ApartmentNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Property.Address.City" class="control-label"></label>
+                <input asp-for="Property.Address.City" class="form-control">
+                <span asp-validation-for="Property.Address.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Property.Address.State" class="control-label"></label>
+                <input asp-for="Property.Address.State" class="form-control">
+                <span asp-validation-for="Property.Address.State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Property.Address.ZipCode" class="control-label"></label>
+                <input asp-for="Property.Address.ZipCode" class="form-control">
+                <span asp-validation-for="Property.Address.ZipCode" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
