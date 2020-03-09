@@ -31,8 +31,24 @@
                 <span asp-validation-for="Renter.LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Renter.UserId" class="control-label"></label>
-                <select asp-for="Renter.UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+                <label asp-for="Renter.FacebookSocial" class="control-label"></label>
+                <input asp-for="Renter.FacebookSocial" class="form-control" />
+                <span asp-validation-for="Renter.FacebookSocial" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Renter.InstagramSocial" class="control-label"></label>
+                <input asp-for="Renter.InstagramSocial" class="form-control" />
+                <span asp-validation-for="Renter.InstagramSocial" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Renter.TwitterSocial" class="control-label"></label>
+                <input asp-for="Renter.TwitterSocial" class="form-control" />
+                <span asp-validation-for="Renter.TwitterSocial" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Renter.ProfileUrl" class="control-label"></label>
+                <input asp-for="Renter.ProfileUrl" class="form-control" />
+                <span asp-validation-for="Renter.ProfileUrl" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
