@@ -19,9 +19,10 @@ namespace FlatMatchApp
         }
 
 
-        public Leaseholder MatchUsers(Renter renter)
+        public List<Leaseholder> MatchUsers(Renter renter)
         {
             Leaseholder leaseholder = new Leaseholder();
+            List<Leaseholder> leaseholders = new List<Leaseholder>();
 
             //Will be a series of values, 1-5, that I will use to match the same values together
             //How to make sure that the list doesn't just choose however may they have in their list of prefs
@@ -47,7 +48,7 @@ namespace FlatMatchApp
 
 
 
-            return leaseholder;
+            return leaseholders;
             //Might want to return a list or IQueryable of leaseholders. Or RedirectToAction("Index", IQueryable<Leaseholder>)
             //or something similar
         }

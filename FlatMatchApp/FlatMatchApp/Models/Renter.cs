@@ -29,6 +29,7 @@ namespace FlatMatchApp.Models
         public string FacebookSocial { get; set; }
         public string InstagramSocial { get; set; }
         public string TwitterSocial { get; set; }
+        public string  ProfileUrl { get; set; }
 
     }
 }

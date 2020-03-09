@@ -88,7 +88,8 @@ namespace FlatMatchApp.Controllers
                 editLeaseholder.Property.Address.ApartmentNumber = leaseholder.Property.Address.ApartmentNumber;
                 editLeaseholder.Property.Address.City = leaseholder.Property.Address.City;
                 editLeaseholder.Property.Address.State = leaseholder.Property.Address.State;
-                editLeaseholder.Property.Address.ZipCode = leaseholder.Property.Address.ZipCode;            }
+                editLeaseholder.Property.Address.ZipCode = leaseholder.Property.Address.ZipCode;
+            }
 
                 return RedirectToAction(nameof(Index));
             
@@ -122,5 +123,9 @@ namespace FlatMatchApp.Controllers
             _context.SaveChanges();
             return Redirect("Index");
         }
+
+
+        //Can create new method called AssignList() or something that takes in a List<Preference>, foreach's over the list and assigns them to the currently logged
+        //in user using that code David gave to us
     }
 }
