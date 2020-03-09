@@ -13,7 +13,7 @@ using System.Security.Claims;
 
 namespace FlatMatchApp.Controllers
 {
-    [ServiceFilter(typeof(GlobalRouting))]
+    //[ServiceFilter(typeof(GlobalRouting))]
     [Authorize(Roles = "Renter")]
     public class RentersController : Controller
     {
@@ -25,7 +25,7 @@ namespace FlatMatchApp.Controllers
         }
 
         // GET: Renters
-        public ActionResult Index()
+        public IActionResult Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var renter = _context.Renters.FirstOrDefault(a => a.UserId == userId);

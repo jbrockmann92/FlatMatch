@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlatMatchApp.Controllers
 {
-    [ServiceFilter(typeof(GlobalRouting))]
+    //[ServiceFilter(typeof(GlobalRouting))]
     [Authorize(Roles = "Leaseholder")]
     public class LeaseholderController : Controller
     {
