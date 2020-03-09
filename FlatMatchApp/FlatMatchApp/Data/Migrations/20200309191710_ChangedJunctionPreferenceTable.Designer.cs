@@ -4,14 +4,16 @@ using FlatMatchApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FlatMatchApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200309191710_ChangedJunctionPreferenceTable")]
+    partial class ChangedJunctionPreferenceTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,57 +103,52 @@ namespace FlatMatchApp.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Smoking"
+                            Name = "Activity"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Alcohol"
+                            Name = "Smoking"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Partying"
+                            Name = "Drinking"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "WasherAndDryer"
+                            Name = "Bedtime"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "Cleanliness"
+                            Name = "Noise Level"
                         },
                         new
                         {
                             Id = 6,
-                            Name = "SoundLevel"
+                            Name = "Washer/Dryer"
                         },
                         new
                         {
                             Id = 7,
-                            Name = "AC"
+                            Name = "GymInBuilding"
                         },
                         new
                         {
                             Id = 8,
-                            Name = "Patio"
+                            Name = "Cleanliness"
                         },
                         new
                         {
                             Id = 9,
-                            Name = "Yard"
+                            Name = "Food"
                         },
                         new
                         {
                             Id = 10,
-                            Name = "Pool"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Gym"
+                            Name = "Extravert/Introvert"
                         });
                 });
 
@@ -230,11 +227,6 @@ namespace FlatMatchApp.Migrations
 
             modelBuilder.Entity("FlatMatchApp.Models.UserPreferences", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int>("PreferenceId")
                         .HasColumnType("int");
 
@@ -243,8 +235,6 @@ namespace FlatMatchApp.Migrations
 
                     b.Property<int>("Value")
                         .HasColumnType("int");
-
-                    b.HasKey("Id");
 
                     b.HasIndex("PreferenceId");
 
@@ -282,15 +272,15 @@ namespace FlatMatchApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e996fae3-25fe-4172-ac87-8014fc64bb8a",
-                            ConcurrencyStamp = "3c4f515b-c65d-4885-bfec-7a81906f3435",
+                            Id = "5af5080d-07a0-44e3-bec6-192c6384ec24",
+                            ConcurrencyStamp = "b9823c69-1052-4b9d-bb8f-25c0261d3204",
                             Name = "Renter",
                             NormalizedName = "RENTER"
                         },
                         new
                         {
-                            Id = "c60a05ba-c96f-4058-bd53-2ff2291c9e97",
-                            ConcurrencyStamp = "42f597c9-8dbd-441a-9d90-a70e59074436",
+                            Id = "449545d6-5e45-4f72-b6e2-1861ed6702dc",
+                            ConcurrencyStamp = "a254c65b-698d-4163-9f15-82d7d227f70b",
                             Name = "Leaseholder",
                             NormalizedName = "LEASEHOLDER"
                         });

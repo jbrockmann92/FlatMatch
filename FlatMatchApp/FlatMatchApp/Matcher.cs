@@ -26,7 +26,7 @@ namespace FlatMatchApp
             List<Leaseholder> finalLeaseholders = new List<Leaseholder>();
             List<int[,]> tempLeaseholders = new List<int[,]>();
             int leaseholderValue = 0;
-            int[,] holder_score = new int[leaseholders.Count,2];
+            int[,] holder_score = new int[leaseholders.Count, 2];
             var rPrefs = renter.Preferences;
 
             for (int i = 0; i < leaseholders.Count; i++)
@@ -36,7 +36,7 @@ namespace FlatMatchApp
                 for (int j = 0; j < 12; j++)
                 {
                     var lPrefsValue = _context.UserPreferences.Where(p => p.Id == lPrefs[j].Id).FirstOrDefault().Value;
-                    var rPrefsValue = _context.UserPreferences.Where(u => u.UserId == rPrefs[j].Id).FirstOrDefault().Value;
+                    var rPrefsValue = _context.UserPreferences.Where(u => u.UserId == rPrefs[j].Id.ToString()).FirstOrDefault().Value;
 
                     leaseholderValue += Math.Abs(lPrefsValue - rPrefsValue);
                 }
@@ -67,7 +67,7 @@ namespace FlatMatchApp
                 leaseholders.Add(_context.Leaseholders.Where(l => l.Id == tempList[i,1]).FirstOrDefault());
             }
 
-            return leaseholders;
+        return leaseholders;
         }
     }
 }
