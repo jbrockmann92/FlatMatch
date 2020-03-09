@@ -25,10 +25,13 @@ namespace FlatMatchApp.Models
 
         [NotMapped]
         public List<Preference> Preferences { get; set; }
-
+        [Display(Name = "Link to Facebook")]
         public string FacebookSocial { get; set; }
+        [Display(Name = "Link to Instagram")]
         public string InstagramSocial { get; set; }
+        [Display(Name = "Link to Twitter")]
         public string TwitterSocial { get; set; }
+        [Display(Name = "Add a Profile Image URL")]
         public string  ProfileUrl { get; set; }
 
     }

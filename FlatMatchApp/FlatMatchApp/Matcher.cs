@@ -21,8 +21,10 @@ namespace FlatMatchApp
 
         public List<Leaseholder> MatchUsers(Renter renter)
         {
-            Leaseholder leaseholder = new Leaseholder();
-            List<Leaseholder> leaseholders = new List<Leaseholder>();
+            var leaseholders = _context.Leaseholders.ToList();
+            List<Leaseholder> finalLeaseholders = new List<Leaseholder>();
+            int leaseholderValue;
+
 
             //Will be a series of values, 1-5, that I will use to match the same values together
             //How to make sure that the list doesn't just choose however may they have in their list of prefs
@@ -45,13 +47,41 @@ namespace FlatMatchApp
 
             //Probably want to use some ternaries in the algorithm
 
+            foreach (Leaseholder leaseholder in leaseholders)
+            {
+                foreach (Preference preference in leaseholder.Preferences)
+                {
+                    foreach (Preference renterPreference in renter.Preferences)
+                    {
+                        var renterPreferences = _context.UserPreferences.Where(p => p.UserId == renter.Id).ToList();
+                        var leaseholderPreferences = _context.UserPreferences.Where(p => p.UserId == leaseholder.Id).ToList();
+                        foreach (UserPreferences userPreference in renterPreferences)
+                        {
+                            foreach (UserPreferences leasePreference in leaseholderPreferences)
+                            {
+                                if (userPreference.Id == preference.Id)
+                                {
+                                    int value = Math.Abs(userPreference.Value - leasePreference.Value);
+                                    //Have to return and associate their score with the leaseholder. Array that holds the value and their id maybe?
+                                }
+                                else
+                                    continue;
+                                //Truly disgusting code, but should pretty much do what I need
+                            }
+                        }
+                    }
+                }
+            }
 
 
-
-            return leaseholders;
+            return finalLeaseholders;
             //Might want to return a list or IQueryable of leaseholders. Or RedirectToAction("Index", IQueryable<Leaseholder>)
             //or something similar
         }
 
+        public List<Leaseholder> SortLeaseholders(List<Leaseholder> leaseholders)
+        {
+            //Sort them in descending order so they can be returned and printed to the screen
+        }
     }
 }

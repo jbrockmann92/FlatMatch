@@ -6,7 +6,7 @@
 
 <h1>ProfileMain</h1>
 <h3>Welcome, @Model.FirstName!</h3>
-<img src="@Model."
+<img src="@Model.ProfileUrl" />
 @*Nothing done here so far. Need to make changes to make this into an actual profile page*@
 
 <div>
@@ -17,8 +17,8 @@
             @Html.DisplayNameFor(model => model.Preferences)
         </dt>
         <dd class="col-sm-10">
-            @{ 
-                foreach(Preference preference in Model.Preferences)
+            @{
+                foreach (Preference preference in Model.Preferences)
                 {
                     Html.DisplayFor(model => model.Preferences);
                     //Won't format correctly, but this is the basic idea
