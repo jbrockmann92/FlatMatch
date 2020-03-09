@@ -15,9 +15,9 @@ namespace FlatMatchApp.Models
         [Required]
         [Display(Name = "Street")]
         public string StreetName { get; set; }
-        [Display(Name = "City")]
+        [Display(Name = "Apartment")]
         public string ApartmentNumber { get; set; }
-        [Required]
+        [Required]        
         public string City { get; set; }
         [Required]
         public string State { get; set; }
