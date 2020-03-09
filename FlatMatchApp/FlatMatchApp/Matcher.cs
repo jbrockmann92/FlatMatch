@@ -67,7 +67,7 @@ namespace FlatMatchApp
                 leaseholders.Add(_context.Leaseholders.Where(l => l.Id == tempList[i,1]).FirstOrDefault());
             }
 
-        return leaseholders;
+            return leaseholders;
         }
     }
 }
