@@ -26,5 +26,7 @@ namespace FlatMatchApp.Models
 
         [NotMapped]
         public List<Preference> Preferences { get; set; }
+        public string ProfileUrl { get; set; }
+
     }
 }

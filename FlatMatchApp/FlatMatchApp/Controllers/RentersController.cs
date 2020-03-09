@@ -85,6 +85,10 @@ namespace FlatMatchApp.Controllers
                 var preferences = renterViewModel.Preferences;
                 for (int i = 0; i < preferences.Count; i++)
                 {
+
+                    //Not quite right here. Need to have a list of preferences from the html or something before we can run this.
+                    //It looks right as far as using the junction table goes, but we don't have any preferences yet
+
                     var newPreferences = new UserPreferences();
                     newPreferences.PreferenceId = preferences[i].Id;
                     newPreferences.UserId =  int.Parse(userId);  //we should have this be a string instead, otherwise we will have to use the intparse or converttoint every time
