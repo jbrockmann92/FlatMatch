@@ -22,11 +22,11 @@ namespace FlatMatchApp.ActionFilters
             {
                 if (_claimsPrincipal.IsInRole("Renter"))
                 {
-                    context.Result = new RedirectToActionResult("Index", "RentersController", null);
+                    context.Result = new RedirectToActionResult("Index", "Renters", null);
                 }
                 else if (_claimsPrincipal.IsInRole("Leaseholder"))
                 {
-                    context.Result = new RedirectToActionResult("Index", "LeaseholderController", null);
+                    context.Result = new RedirectToActionResult("Index", "Leaseholders", null);
 
                 }
             }

@@ -28,12 +28,11 @@ namespace FlatMatchApp.Controllers
             }
             if (User.IsInRole("Renter"))
             {
-                //Employee employee = 
-                return Redirect("./Renter/Index");
+                return RedirectToAction("Index", "Renters");
             }
             else if (User.IsInRole("Leaseholder"))
             {
-                return Redirect("./Leaseholder/Index");
+                return RedirectToAction("Index", "Leaseholders");
             }
             return View();
         }
