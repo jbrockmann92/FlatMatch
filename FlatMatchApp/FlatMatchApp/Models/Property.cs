@@ -12,13 +12,9 @@ namespace FlatMatchApp.Models
         [Key]
         public int Id { get; set; }
         public string Activities { get; set; }
-        [Required]
         public double SquareFootage { get; set; }
-        [Required]
         public double Price { get; set; }
-        [Required]
         public string Type { get; set; }
-        [Required]
         public int NumberBedrooms { get; set; }
         public bool isAvailable { get; set; }
         [ForeignKey("Address")]

@@ -37,26 +37,25 @@ namespace FlatMatchApp.Controllers
 
         // GET: LeaseHolder/Details/5
         [HttpGet]
-        public IActionResult Details(int id)
+        public IActionResult Details(int? id)
         {
-            var leaseholder = _context.Leaseholders.SingleOrDefault(x => x.Id == id);
+            var leaseholder = _context.Leaseholders.Include(l => l.IdentityUser).SingleOrDefault(x => x.Id == id);
             return View(leaseholder);
         }
         // GET: LeaseHolder/Create
         [HttpGet]
         public IActionResult Create()
         {
-            var leaseholder = new Leaseholder();
-            return View(leaseholder);
+            return View();
         }
 
         // POST: LeaseHolder/Create
         [HttpPost]
-        public IActionResult Create(Leaseholder leaseholder)
+        public IActionResult Create(LeaseholdersViewModel leaseholderViewModel)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            leaseholder.UserId = userId;
-            _context.Leaseholders.Add(leaseholder);
+            leaseholderViewModel.Leaseholder.UserId = userId;
+            _context.Leaseholders.Add(leaseholderViewModel.Leaseholder);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
