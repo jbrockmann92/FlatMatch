@@ -99,7 +99,7 @@ namespace FlatMatchApp.Controllers
                     newPreferences.Value = value[i];
                     _context.UserPreferences.Add(newPreferences);
 
-                    }
+                }
 
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
@@ -193,6 +193,11 @@ namespace FlatMatchApp.Controllers
             _context.Renters.Remove(renter);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult AboutUs()
+        {
+            return View();
         }
 
         private bool RenterExists(int id)
