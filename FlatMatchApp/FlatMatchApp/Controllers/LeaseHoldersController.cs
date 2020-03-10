@@ -42,6 +42,7 @@ namespace FlatMatchApp.Controllers
         public IActionResult Details(int id)
         {
             var leaseholder = _context.Leaseholders.Include(l => l.Property.Address).FirstOrDefault(l => l.Id == id);
+            
 
             return View(leaseholder);
         }
