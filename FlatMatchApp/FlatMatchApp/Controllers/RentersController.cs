@@ -38,6 +38,7 @@ namespace FlatMatchApp.Controllers
             viewModel.Renter = renter;
             var leaseholders = _context.Leaseholders
                                     .Include(l => l.Property)
+                                    .Include(l => l.Property.Address)
                                     .ToList();
             //leaseholders = leaseholders.Where( l => l.Property.Address.City == )
             viewModel.Leaseholders = leaseholders;
