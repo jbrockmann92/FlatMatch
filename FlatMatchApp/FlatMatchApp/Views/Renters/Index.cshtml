@@ -14,7 +14,9 @@
 </head>
 <body>
     <p>
-
+        <body onload="initialize()">
+            <div id="map"></div>
+        </body>
     </p>
     <table class="table">
         <thead>
@@ -25,7 +27,6 @@
                 <th>
                     City
                 </th>
-
                 <th><input id="myInput" type="text" placeholder="Filter"></th>
             </tr>
         </thead>
@@ -39,25 +40,61 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Property.Address.City)
                     </td>
-
                     <td>
-
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
     <script>
-          $(document).ready(function(){
-            $("#myInput").on("keyup", function() {
-              var value = $(this).val().toLowerCase();
-              $("#leaseholders tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-              });
+    var geocoder;
+    var map;
+    function initialize() {
+        geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng(43.0389, -87.9065); //This is from https://developers.google.com/maps/documentation/javascript/geocoding#GeocodingRequests
+        var mapOptions = {
+            zoom: 13,
+            center: latlng
+        }
+        map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        codeAddress();
+    }
+
+    function codeAddress() {
+        var addresses = [];
+        @foreach (var leaseholder in Model.Leaseholders)
+        {
+            @:addresses.push("@leaseholder.Property.Address.StreetName + @leaseholder.Property.Address.City + @leaseholder.Property.Address.State")
+        }
+        for (var i = 0; i < @Model.Leaseholders.Count; i++) {
+            var address = addresses[i];
+            geocoder.geocode( { 'address': address}, function(results, status) {
+                if (status == 'OK') {
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
             });
-          });
+        }
+    }
+    </script>    
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key= + @API_KEYS.GoogleAPI">
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#leaseholders tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
     </script>
 </body>
 </html>

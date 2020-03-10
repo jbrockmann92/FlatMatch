@@ -12,16 +12,16 @@ namespace FlatMatchApp
     //JBrockmann
     public class Matcher
     {
-        //Create algorithm here
         private readonly ApplicationDbContext _context;
         public Matcher(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public List<Leaseholder> MatchUsers(Renter renter, int Zip) //This means we'll have to have both a renter and a Zip passed into this method
+        public List<Leaseholder> MatchUsers(Renter renter, int zip) //This means we'll have to have both a renter and a Zip passed into this method
         {
-            var leaseholders = _context.Leaseholders.ToList().Where(l => l.Property.Address.ZipCode == Zip.ToString()).ToList();
+            //function to assign all leaseholders their zip code?
+            var leaseholders = AssignLeaseholderAddresses(zip);
             List<Leaseholder> finalLeaseholders = new List<Leaseholder>();
             List<int[,]> tempLeaseholders = new List<int[,]>();
             int leaseholderValue = 0;
@@ -32,10 +32,10 @@ namespace FlatMatchApp
             {
                 var lPrefs = leaseholders[i].Preferences;
 
-                for (int j = 0; j < 12; j++)
+                for (int j = 0; j < 11; j++)
                 {
-                    var lPrefsValue = _context.UserPreferences.Where(p => p.Id == lPrefs[j].Id).FirstOrDefault().Value;
                     var rPrefsValue = _context.UserPreferences.Where(u => u.UserId == rPrefs[j].Id.ToString()).FirstOrDefault().Value;
+                    var lPrefsValue = _context.UserPreferences.Where(p => p.Id == lPrefs[j].Id).FirstOrDefault().Value;
 
                     leaseholderValue += Math.Abs(lPrefsValue - rPrefsValue);
                 }
@@ -62,20 +62,21 @@ namespace FlatMatchApp
                 var tempList = leaseholdersArrays[i];
                 leaseholders.Add(_context.Leaseholders.Where(l => l.Id == tempList[i,1]).FirstOrDefault());
             }
-
-
-
-            return null;
-            //Might want to return a list or IQueryable of leaseholders. Or RedirectToAction("Index", IQueryable<Leaseholder>)
-            //or something similar
+        return leaseholders;
         }
 
-        public List<Leaseholder> SortLeaseholders(List<Leaseholder> leaseholders)
+        public List<Leaseholder> AssignLeaseholderAddresses(int zip)
         {
-            return leaseholders;
-            //place holder return ^ so it temp is not an error
-            //Sort them in descending order so they can be returned and printed to the screen
+            List<Leaseholder> leaseholders = new List<Leaseholder>();
 
+            foreach (Leaseholder leaseholder in _context.Leaseholders)
+            {
+                leaseholder.Property = _context.Properties.Where(p => p.Id == leaseholder.PropertyId).FirstOrDefault();
+                leaseholder.Property.Address = _context.Addresses.Where(a => a.Id == leaseholder.Property.AddressId && a.ZipCode == zip.ToString()).FirstOrDefault();
+                leaseholders.Add(leaseholder);
+            }
+
+            return leaseholders;
         }
     }
 }
