@@ -80,8 +80,7 @@ namespace FlatMatchApp.Controllers
                 var value = renterViewModel.Value; //Only holds an int, but the code was trying to use it as a collection in the for loop below
                 renter.UserId = userId;
                 _context.Renters.Add(renter);
-                var preferences = renterViewModel.Preferences;
-                for (int i = 0; i < 1; i++)
+                for (int i = 0; i < 9; i++)
                 {
 
                     var newPreferences = new UserPreferences();

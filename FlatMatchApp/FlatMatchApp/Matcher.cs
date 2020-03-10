@@ -63,7 +63,19 @@ namespace FlatMatchApp
                 leaseholders.Add(_context.Leaseholders.Where(l => l.Id == tempList[i,1]).FirstOrDefault());
             }
 
-        return leaseholders;
+
+
+            //return finalLeaseholders;
+            //Might want to return a list or IQueryable of leaseholders. Or RedirectToAction("Index", IQueryable<Leaseholder>)
+            //or something similar
+        }
+
+        public List<Leaseholder> SortLeaseholders(List<Leaseholder> leaseholders)
+        {
+            return leaseholders;
+            //place holder return ^ so it temp is not an error
+            //Sort them in descending order so they can be returned and printed to the screen
+
         }
     }
 }
