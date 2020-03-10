@@ -30,7 +30,7 @@ namespace FlatMatchApp.Controllers
 
             var leaseholder = _context.Leaseholders.Include(l => l.Property.Address).Where(l => l.UserId == userId).ToList();
 
-            if(leaseholder == null)
+            if (leaseholder == null)
             {
                 return RedirectToAction("Create");
             }
@@ -41,9 +41,12 @@ namespace FlatMatchApp.Controllers
         [HttpGet]
         public IActionResult Details(int id)
         {
+            var viewModel = new LeaseholderViewModel();
             var leaseholder = _context.Leaseholders.Include(l => l.Property.Address).FirstOrDefault(l => l.Id == id);
-
-            return View(leaseholder);
+            //var rPrefs = _context.UserPreferences.Where(u => u.UserId == leaseholder.UserId).ToList();
+            viewModel.Leaseholder = leaseholder;
+            
+            return View(viewModel);
         }
         // GET: LeaseHolder/Create
         [HttpGet]
@@ -61,16 +64,16 @@ namespace FlatMatchApp.Controllers
             var value = leaseholderViewModel.Value;
             leaseholder.UserId = userId;
             _context.Leaseholders.Add(leaseholderViewModel.Leaseholder);
-                for (int i = 0; i < 9; i++)
-                {
+            for (int i = 0; i < 9; i++)
+            {
 
-                    var newPreferences = new UserPreferences();
-                    newPreferences.PreferenceId = i + 1;
-                    newPreferences.UserId = userId;
-                    newPreferences.Value = value[i];
-                    _context.UserPreferences.Add(newPreferences);
+                var newPreferences = new UserPreferences();
+                newPreferences.PreferenceId = i + 1;
+                newPreferences.UserId = userId;
+                newPreferences.Value = value[i];
+                _context.UserPreferences.Add(newPreferences);
 
-                }
+            }
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -105,21 +108,21 @@ namespace FlatMatchApp.Controllers
                 editLeaseholder.Property.Address.ZipCode = leaseholder.Property.Address.ZipCode;
             }
 
-                return RedirectToAction(nameof(Index));
-            
+            return RedirectToAction(nameof(Index));
+
         }
 
         // GET: LeaseHolder/Delete/5
         public ActionResult Delete(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var leaseholder = _context.Leaseholders.Include(l => l.Property).FirstOrDefault(l => l.Id == id);
+            var leaseholder = _context.Leaseholders.Include(l => l.Preferences).Include(l => l.Property).FirstOrDefault(l => l.Id == id);
 
-            if(leaseholder == null)
+            if (leaseholder == null)
             {
                 return NotFound();
             }
