@@ -97,7 +97,7 @@ namespace FlatMatchApp.Controllers
                     newPreferences.Value = value[i];
                     _context.UserPreferences.Add(newPreferences);
 
-                    }
+                }
 
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));

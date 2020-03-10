@@ -57,8 +57,22 @@ namespace FlatMatchApp.Controllers
         public IActionResult Create(LeaseholderViewModel leaseholderViewModel)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            leaseholderViewModel.Leaseholder.UserId = userId;
+            //leaseholderViewModel.Leaseholder.UserId = userId;
+            //var value = leaseholderViewModel.Value;
+            var leaseholder = leaseholderViewModel.Leaseholder;
+            var value = leaseholderViewModel.Value;
+            leaseholder.UserId = userId;
             _context.Leaseholders.Add(leaseholderViewModel.Leaseholder);
+                for (int i = 0; i < 9; i++)
+                {
+
+                    var newPreferences = new UserPreferences();
+                    newPreferences.PreferenceId = i + 1;
+                    newPreferences.UserId = userId;
+                    newPreferences.Value = value[i];
+                    _context.UserPreferences.Add(newPreferences);
+
+                }
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -9,7 +9,7 @@ namespace FlatMatchApp.Models
     {
         public Renter Renter { get; set; }
         public List<Preference> Preferences { get; set; }
-        public int Value { get; set; }
+        public List<int> Value { get; set; }
         public Leaseholder Leaseholder { get; set; }
         public List<Leaseholder> Leaseholders { get; set; }
     }
