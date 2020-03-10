@@ -4,14 +4,16 @@ using FlatMatchApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FlatMatchApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200309193420_ChangedInitializedPreferenceValues")]
+    partial class ChangedInitializedPreferenceValues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -230,11 +232,6 @@ namespace FlatMatchApp.Migrations
 
             modelBuilder.Entity("FlatMatchApp.Models.UserPreferences", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int>("PreferenceId")
                         .HasColumnType("int");
 
@@ -243,8 +240,6 @@ namespace FlatMatchApp.Migrations
 
                     b.Property<int>("Value")
                         .HasColumnType("int");
-
-                    b.HasKey("Id");
 
                     b.HasIndex("PreferenceId");
 
@@ -282,15 +277,15 @@ namespace FlatMatchApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e996fae3-25fe-4172-ac87-8014fc64bb8a",
-                            ConcurrencyStamp = "3c4f515b-c65d-4885-bfec-7a81906f3435",
+                            Id = "4a611d9f-a5c9-4aea-ad74-52f0281c3303",
+                            ConcurrencyStamp = "3884ce05-7ff7-4c7e-b823-963de8325092",
                             Name = "Renter",
                             NormalizedName = "RENTER"
                         },
                         new
                         {
-                            Id = "c60a05ba-c96f-4058-bd53-2ff2291c9e97",
-                            ConcurrencyStamp = "42f597c9-8dbd-441a-9d90-a70e59074436",
+                            Id = "15f68f28-42a1-443e-a451-80e876960c66",
+                            ConcurrencyStamp = "169d9bc1-9b26-4ecb-8fe6-ad9129417cb5",
                             Name = "Leaseholder",
                             NormalizedName = "LEASEHOLDER"
                         });

@@ -74,31 +74,22 @@ namespace FlatMatchApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Right now the var value that's assigned is only an int, not a list of ints. Probably something we'll
-                //have to go over on Monday. The junction table is something that none of us have done before,
-                //so it will take some getting used to
+                //junction table created: UserPreferences
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var renter = renterViewModel.Renter;
                 var value = renterViewModel.Value; //Only holds an int, but the code was trying to use it as a collection in the for loop below
                 renter.UserId = userId;
                 _context.Renters.Add(renter);
-                var preferences = renterViewModel.Preferences;
-                for (int i = 0; i < preferences.Count; i++)
+                for (int i = 0; i < 9; i++)
                 {
 
-                    //Not quite right here. Need to have a list of preferences from the html or something before we can run this.
-                    //It looks right as far as using the junction table goes, but we don't have any preferences yet
-
                     var newPreferences = new UserPreferences();
-                    newPreferences.PreferenceId = preferences[i].Id;
-                    newPreferences.UserId =  int.Parse(userId);  //we should have this be a string instead, otherwise we will have to use the intparse or converttoint every time
-                    newPreferences.Value = value;
+                    newPreferences.PreferenceId = i+1;
+                    newPreferences.UserId =  userId;  
+                    newPreferences.Value = value[i];
                     _context.UserPreferences.Add(newPreferences);
-                    //added list of ints to renter view controller in order to 
-                    //be able to capture value to be stored in preferences
-                    //This method takes up a lot of space/memory, I suggest we simply add preferences to the renter model
-                    //or create a second table that hangs onto all prerences at once along with each individual value instead.
-                }
+
+                    }
 
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
