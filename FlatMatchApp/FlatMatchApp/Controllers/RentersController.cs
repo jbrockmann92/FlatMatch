@@ -27,14 +27,24 @@ namespace FlatMatchApp.Controllers
         // GET: Renters
         public IActionResult Index()
         {
+            var viewModel = new RenterViewModel();
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var renter = _context.Renters.FirstOrDefault(a => a.UserId == userId);
             if (renter is null)
             {
                 return RedirectToAction("Create");
             }
-            
-            return RedirectToAction("Edit");
+            viewModel.Renter = renter;
+            var leaseholders = _context.Leaseholders
+                                    .Include(l => l.Property)
+                                    .Include(l => l.Property.Address)
+                                    .ToList();
+            //leaseholders = leaseholders.Where( l => l.Property.Address.City == )
+            viewModel.Leaseholders = leaseholders;
+            Matcher matcher = new Matcher(_context);
+            matcher.MatchUsers(renter, 53203);
+            return View(viewModel);
         }
 
         // GET: Renters/Details/5

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FlatMatchApp.Models.RenterViewModel>
+﻿@model FlatMatchApp.Models.RenterViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -13,40 +13,51 @@
     <title>Index</title>
 </head>
 <body>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Renter.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Renter.LastName)
-            </th>
-            
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Renter.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Renter.LastName)
-            </td>
-            
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Renter.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Renter.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Renter.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <p>
+
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Street Name
+                </th>
+                <th>
+                    City
+                </th>
+
+                <th><input id="myInput" type="text" placeholder="Filter"></th>
+            </tr>
+        </thead>
+        <tbody id="leaseholders">
+            @foreach (var item in Model.Leaseholders)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Property.Address.StreetName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Property.Address.City)
+                    </td>
+
+                    <td>
+
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <script>
+          $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+              var value = $(this).val().toLowerCase();
+              $("#leaseholders tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+              });
+            });
+          });
+    </script>
 </body>
 </html>
