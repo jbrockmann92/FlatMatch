@@ -27,19 +27,19 @@ namespace FlatMatchApp.Controllers
         public IActionResult Index() //RP
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var leaseholder = _context.Leaseholders.FirstOrDefault(l => l.UserId == userId);
+            var leaseholder = _context.Leaseholders.Include(l => l.IdentityUser).FirstOrDefault(l => l.UserId == userId);
             if(leaseholder == null)
             {
                 return RedirectToAction("Create");
             }
-            return RedirectToAction("Details");
+            return RedirectToAction("Details", new { id = leaseholder.Id });
         }
 
         // GET: LeaseHolder/Details/5
-        [HttpGet]
-        public IActionResult Details(int? id)
+        
+        public IActionResult Details(int id)
         {
-            var leaseholder = _context.Leaseholders.Include(l => l.IdentityUser).SingleOrDefault(x => x.Id == id);
+            var leaseholder = _context.Leaseholders.Include(l => l.Property.Address).FirstOrDefault(x => x.Id == id);
             return View(leaseholder);
         }
         // GET: LeaseHolder/Create
@@ -51,7 +51,7 @@ namespace FlatMatchApp.Controllers
 
         // POST: LeaseHolder/Create
         [HttpPost]
-        public IActionResult Create(LeaseholdersViewModel leaseholderViewModel)
+        public IActionResult Create(LeaseholderViewModel leaseholderViewModel)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             leaseholderViewModel.Leaseholder.UserId = userId;
