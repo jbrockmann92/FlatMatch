@@ -1,4 +1,4 @@
-﻿@model FlatMatchApp.Models.LeaseholdersViewModel
+﻿@model FlatMatchApp.Models.LeaseholderViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -23,15 +23,11 @@
                 <span asp-validation-for="Leaseholder.LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Leaseholder.Property.Activities" class="control-label"></label>
-                <input asp-for="Leaseholder.Property.Activities" class="form-control">
-                <span asp-validation-for="Leaseholder.Property.Activities" class="text-danger"></span>
+                <label asp-for="Leaseholder.ProfileUrl" class="control-label"></label>
+                <input asp-for="Leaseholder.ProfileUrl" class="form-control" />
+                <span asp-validation-for="Leaseholder.ProfileUrl" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Leaseholder.Property.SquareFootage" class="control-label"></label>
-                <input asp-for="Leaseholder.Property.SquareFootage" class="form-control">
-                <span asp-validation-for="Leaseholder.Property.SquareFootage" class="text-danger"></span>
-            </div>
+            
             <div class="form-group">
                 <label asp-for="Leaseholder.Property.Price" class="control-label"></label>
                 <input asp-for="Leaseholder.Property.Price" class="form-control">
@@ -76,14 +72,13 @@
                 <label asp-for="Leaseholder.Property.Address.ZipCode" class="control-label"></label>
                 <input asp-for="Leaseholder.Property.Address.ZipCode" class="form-control">
                 <span asp-validation-for="Leaseholder.Property.Address.ZipCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+                </div>
         </form>
     </div>
 </div>
-
+<div class="form-group">
+    <input type="submit" value="Create" class="btn btn-primary" />
+</div>
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

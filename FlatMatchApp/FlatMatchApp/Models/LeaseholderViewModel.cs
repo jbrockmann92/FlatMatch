@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FlatMatchApp.Models
 {
-    public class LeaseholdersViewModel
+    public class LeaseholderViewModel
     {
         public Renter Renter { get; set; }
         public List<Preference> Preferences { get; set; }
