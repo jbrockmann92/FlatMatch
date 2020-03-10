@@ -59,3 +59,22 @@
     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-danger">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+<div>
+    <div>
+        <h3 id="Photos"></h3>
+        <h3 id="Description"></h3>
+        <h3 id="Price"></h3>
+    </div>
+
+    <script>
+        if (1 = 1) { //Need to change this once we decide how we're storing photos. If photo count is less than 3 or something
+            document.getElementById("Photos").innerHTML = "We would recommend adding another photo or two to really make your profile pop!";
+        };
+        if (1 = 1) { //Description length of words or even letters < 300 or something
+            document.getElementById("Description").innerHTML = "We'd recommend adding more on the description section. People like to know what they're getting into."
+        }
+        if (1 = 1) {
+            document.getElementById("Price").innerHTML = "Your price is pretty high. You might want to think about lowering it to attract more renters."
+        }
+    </script>
+</div>

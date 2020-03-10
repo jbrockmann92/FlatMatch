@@ -21,13 +21,12 @@
                 {
                     Html.DisplayFor(model => model.Preferences);
                     //Won't format correctly, but this is the basic idea
-                    
                 }
             }
             @*Currently null until we assign from the database using the junction table in the controller
                 Would be cool to give them the option to change preferences from here*@
-</dl>
-    @*Probably want something here with their available room. At least a link to where they can see it?*@
+    </dl>
+
 </div>
 <div>
     <a asp-action="Index">Search</a>
