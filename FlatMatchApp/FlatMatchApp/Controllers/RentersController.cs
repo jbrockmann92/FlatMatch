@@ -193,6 +193,11 @@ namespace FlatMatchApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
+
         private bool RenterExists(int id)
         {
             return _context.Renters.Any(e => e.Id == id);
