@@ -42,8 +42,8 @@ namespace FlatMatchApp.Controllers
                                     .ToList();
             //leaseholders = leaseholders.Where( l => l.Property.Address.City == )
             viewModel.Leaseholders = leaseholders;
-            Matcher matcher = new Matcher(_context);
-            matcher.MatchUsers(renter, 53203);
+            //Matcher matcher = new Matcher(_context);
+            //matcher.MatchUsers(renter, 53203);
             return View(viewModel);
         }
 
@@ -103,10 +103,6 @@ namespace FlatMatchApp.Controllers
 
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
-
-                
-
-                
             }
             //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", renter.UserId);
             return View(renterViewModel);

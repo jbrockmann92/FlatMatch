@@ -51,6 +51,9 @@ namespace FlatMatchApp
             //or something similar
         }
 
+
+        //This could also be where we grab the images and put them into a list or something
+
         public List<Leaseholder> SortLeaseholders(List<int[,]> leaseholdersArrayList)
         {
             List<Leaseholder> leaseholders = new List<Leaseholder>();
