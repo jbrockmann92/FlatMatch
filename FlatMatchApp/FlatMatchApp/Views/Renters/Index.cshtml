@@ -13,11 +13,13 @@
     <title>Index</title>
 </head>
 <body>
+    
     <p>
-        <body onload="initialize()">
-            <div id="map"></div>
-        </body>
-    </p>
+            <body onload="initialize()">
+                <div id="map"></div>
+            </body>
+        </p>
+    
     <table class="table">
         <thead>
             <tr>
@@ -30,7 +32,7 @@
                 <th><input id="myInput" type="text" placeholder="Filter"></th>
             </tr>
         </thead>
-        <tbody id="leaseholders">
+        <tbody id="myTable">
             @foreach (var item in Model.Leaseholders)
             {
                 <tr>
@@ -47,6 +49,8 @@
             }
         </tbody>
     </table>
+
+
     <script>
     var geocoder;
     var map;
@@ -82,19 +86,10 @@
             });
         }
     }
-    </script>    
+    </script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key= + @API_KEYS.GoogleAPI">
     </script>
-    <script>
-        $(document).ready(function(){
-            $("#myInput").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#leaseholders tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
+    <script type="text/javascript" src="~/js/site.js"></script>
 </body>
 </html>
