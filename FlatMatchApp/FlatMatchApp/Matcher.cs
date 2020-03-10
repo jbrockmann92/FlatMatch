@@ -1,6 +1,7 @@
 ﻿using FlatMatchApp.Data;
 using FlatMatchApp.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,24 +19,24 @@ namespace FlatMatchApp
             _context = context;
         }
 
-        public List<Leaseholder> MatchUsers(Renter renter, int zip) //This means we'll have to have both a renter and a Zip passed into this method
+        public List<Leaseholder> MatchUsers(Renter renter, int Zip) //This means we'll have to have both a renter and a Zip passed into this method
         {
-            //function to assign all leaseholders their zip code?
-            var leaseholders = AssignLeaseholderAddresses(zip);
+            var leaseholders = _context.Leaseholders.Include(l => l.Property).Include(l => l.Property.Address).ToList().Where(l => l.Property.Address.ZipCode == Zip.ToString()).ToList();
             List<Leaseholder> finalLeaseholders = new List<Leaseholder>();
             List<int[,]> tempLeaseholders = new List<int[,]>();
             int leaseholderValue = 0;
             int[,] holder_score = new int[leaseholders.Count, 2];
-            var rPrefs = renter.Preferences;
+            var rPrefs = _context.UserPreferences.Where(u => u.UserId == renter.UserId).ToList();
+            //I think that's right
 
             for (int i = 0; i < leaseholders.Count; i++)
             {
-                var lPrefs = leaseholders[i].Preferences;
+                var lPrefs = _context.UserPreferences.Where(u => u.UserId == leaseholders[i].UserId).ToList();
 
-                for (int j = 0; j < 11; j++)
+                for (int j = 0; j < 12; j++)
                 {
-                    var rPrefsValue = _context.UserPreferences.Where(u => u.UserId == rPrefs[j].Id.ToString()).FirstOrDefault().Value;
-                    var lPrefsValue = _context.UserPreferences.Where(p => p.Id == lPrefs[j].Id).FirstOrDefault().Value;
+                    var lPrefsValue = lPrefs[j].Value;
+                    var rPrefsValue = rPrefs[j].Value;
 
                     leaseholderValue += Math.Abs(lPrefsValue - rPrefsValue);
                 }
@@ -63,20 +64,6 @@ namespace FlatMatchApp
                 leaseholders.Add(_context.Leaseholders.Where(l => l.Id == tempList[i,1]).FirstOrDefault());
             }
         return leaseholders;
-        }
-
-        public List<Leaseholder> AssignLeaseholderAddresses(int zip)
-        {
-            List<Leaseholder> leaseholders = new List<Leaseholder>();
-
-            foreach (Leaseholder leaseholder in _context.Leaseholders)
-            {
-                leaseholder.Property = _context.Properties.Where(p => p.Id == leaseholder.PropertyId).FirstOrDefault();
-                leaseholder.Property.Address = _context.Addresses.Where(a => a.Id == leaseholder.Property.AddressId && a.ZipCode == zip.ToString()).FirstOrDefault();
-                leaseholders.Add(leaseholder);
-            }
-
-            return leaseholders;
         }
     }
 }
