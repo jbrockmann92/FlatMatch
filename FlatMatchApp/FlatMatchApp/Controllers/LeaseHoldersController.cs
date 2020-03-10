@@ -28,7 +28,7 @@ namespace FlatMatchApp.Controllers
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var leaseholder = _context.Leaseholders.Include(l => l.IdentityUser).FirstOrDefault(l => l.UserId == userId);
+            var leaseholder = _context.Leaseholders.Include(l => l.Property.Address).Where(l => l.UserId == userId).ToList();
 
             if(leaseholder == null)
             {
