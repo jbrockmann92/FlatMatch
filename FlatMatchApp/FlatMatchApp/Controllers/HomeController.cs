@@ -23,19 +23,19 @@ namespace FlatMatchApp.Controllers
         
         public IActionResult Index()   //A.Sanchez Added redirect
         {
-            //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //if (userId == null)
-            //{
-            //    return Redirect("./Identity/Account/Login");
-            //}
-            //if (User.IsInRole("Renter"))
-            //{
-            //    return RedirectToAction("Index", "Renters");
-            //}
-            //else if (User.IsInRole("Leaseholder"))
-            //{
-            //    return RedirectToAction("Index", "Leaseholders");
-            //}
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Redirect("./Identity/Account/Login");
+            }
+            if (User.IsInRole("Renter"))
+            {
+                return RedirectToAction("Index", "Renters");
+            }
+            else if (User.IsInRole("Leaseholder"))
+            {
+                return RedirectToAction("Index", "Leaseholders");
+            }
             return View();
         }
 
