@@ -51,7 +51,7 @@ namespace FlatMatchApp.Controllers
             viewModel.Leaseholder = leaseholder;
 
             //Jbrockmann
-            System.Drawing.Image image = System.Drawing.Image.FromFile(@"robin.jpg");
+            System.Drawing.Image image = System.Drawing.Image.FromFile(@"dark.jpeg");
             viewModel.Value = new List<int>();
             viewModel.Value.Add(CheckImageBrightness(image)); //Add this to the values list, then just grab length - 1 for the if statement in the <script>            
             
