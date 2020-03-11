@@ -80,53 +80,31 @@ namespace FlatMatchApp.Controllers
         }
 
         // GET: LeaseHolder/Edit/5
-        public ActionResult Edit(int? id)
+        [HttpGet]
+        public ActionResult Edit(int id)
         {
+            var leaseholder = _context.Leaseholders.Include(l => l.Property).FirstOrDefault(l => l.Id == id);
             var viewModel = new LeaseholderViewModel();
-            var leaseholder = _context.Leaseholders.Include(l => l.Property.Address).FirstOrDefault(l => l.Id == id);
             viewModel.Leaseholder = leaseholder;
 
             return View(viewModel);
         }
-
-        // POST: LeaseHolder/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("FirstName,LastName")] LeaseholderViewModel viewModel)
+        public ActionResult Edit(LeaseholderViewModel leaseholderViewModel)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId == null)
-            {
-                return NotFound();
-            }
-            var leaseholder = _context.Leaseholders.FirstOrDefault(a => a.UserId == userId);
-            if (leaseholder == null)
-            {
-                return NotFound();
-            }
-            var editLeaseholder = _context.Leaseholders.Include(l => l.Property.Address).FirstOrDefault(l => l.Id == leaseholder.Id);
+            leaseholderViewModel.Leaseholder.UserId = userId;
+            var leaseholderDb = _context.Leaseholders.Include(l => l.Property).Single(l => l.UserId == userId);
+            leaseholderDb.FirstName = leaseholderViewModel.Leaseholder.FirstName;
+            leaseholderDb.LastName = leaseholderViewModel.Leaseholder.LastName;
+            leaseholderDb.ProfileUrl = leaseholderViewModel.Leaseholder.ProfileUrl;
+            leaseholderDb.Property.isAvailable = leaseholderViewModel.Leaseholder.Property.isAvailable;
+            leaseholderDb.Property.SquareFootage = leaseholderViewModel.Leaseholder.Property.SquareFootage;
+            leaseholderDb.Property.Price = leaseholderViewModel.Leaseholder.Property.Price;
+            leaseholderDb.Property.NumberBedrooms = leaseholderViewModel.Leaseholder.Property.NumberBedrooms;
 
-            //if (id != leaseholder.Leaseholder.Id)
-            //{
-            //    return NotFound();
-            //}
-            if (ModelState.IsValid)
-            {
-                // TODO: Add update logic here
-                editLeaseholder.FirstName = viewModel.Leaseholder.FirstName;
-                editLeaseholder.LastName = viewModel.Leaseholder.LastName;
-                editLeaseholder.Property.Address.StreetName = viewModel.Leaseholder.Property.Address.StreetName;
-                editLeaseholder.Property.Address.ApartmentNumber = viewModel.Leaseholder.Property.Address.ApartmentNumber;
-                editLeaseholder.Property.Address.City = viewModel.Leaseholder.Property.Address.City;
-                editLeaseholder.Property.Address.State = viewModel.Leaseholder.Property.Address.State;
-                editLeaseholder.Property.Address.ZipCode = viewModel.Leaseholder.Property.Address.ZipCode;
-            }
-
-            _context.Update(editLeaseholder);
             _context.SaveChanges();
-
-            return RedirectToAction(nameof(Index));
-
+            return RedirectToAction("Index");
         }
 
         // GET: LeaseHolder/Delete/5
