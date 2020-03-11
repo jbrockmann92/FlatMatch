@@ -12,7 +12,6 @@ using FlatMatchApp.ActionFilters;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace FlatMatchApp.Controllers
 {

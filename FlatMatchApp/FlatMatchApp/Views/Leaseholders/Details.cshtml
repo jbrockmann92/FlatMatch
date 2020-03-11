@@ -12,24 +12,56 @@
     <title>Details</title>
 </head>
 <body>
+    @* This is the chat box, let me know if you need to make changes or where you would like to place it, the scripts necessary for this are located at the bottom of the body *@
+    <div class="container">
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            
+            <div class="col-4"><input type="hidden" id="userInput" value="@User.Identity.Name" /></div>
+            <br />
+        </div>
+        <div class="row">
+            <div class="col-2">Message</div>
+            <div class="col-4"><input type="text" id="messageInput" /></div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-6">
+                <input type="button" id="sendButton" value="Send Message" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <ul id="messagesList"></ul>
+        </div>
+    </div>
+    <br />
     <h1>Details</h1>
 
     <div>
         <h4>Leaseholder</h4>
         <div class="card-img"><img src="@Html.DisplayFor(model => model.Leaseholder.ProfileUrl)" /></div>
         <div class="card-footer">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Leaseholder.FirstName)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Leaseholder.FirstName)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Leaseholder.LastName)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Leaseholder.LastName)
-            </dd>
+            <dl>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Leaseholder.FirstName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Leaseholder.FirstName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Leaseholder.LastName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Leaseholder.LastName)
+                </dd>
+            </dl>
         </div>
         < class="row">
         <dd>
@@ -137,6 +169,8 @@
             }
         </script>
     </div>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat.js"></script>
 </body>
 </html>
 
