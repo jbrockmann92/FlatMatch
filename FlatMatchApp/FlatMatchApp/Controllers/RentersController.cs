@@ -242,7 +242,7 @@ namespace FlatMatchApp.Controllers
             {
                 var lPrefs = _context.UserPreferences.Where(u => u.UserId == leaseholders[i].UserId).ToList();
 
-                for (int j = 0; j < 11; j++)
+                for (int j = 0; j < 9; j++)
                 {
                     var lPrefsValue = lPrefs[j].Value;
                     var rPrefsValue = rPrefs[j].Value;
