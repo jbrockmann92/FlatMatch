@@ -13,97 +13,116 @@
     <title>Create</title>
 </head>
 <body>
-
-<h4>Renter</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Renter.FirstName" class="control-label"></label>
-                <input asp-for="Renter.FirstName" class="form-control" />
-                <span asp-validation-for="Renter.FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Renter.LastName" class="control-label"></label>
-                <input asp-for="Renter.LastName" class="form-control" />
-                <span asp-validation-for="Renter.LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Renter.FacebookSocial" class="control-label"></label>
-                <input asp-for="Renter.FacebookSocial" class="form-control" />
-                <span asp-validation-for="Renter.FacebookSocial" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Renter.InstagramSocial" class="control-label"></label>
-                <input asp-for="Renter.InstagramSocial" class="form-control" />
-                <span asp-validation-for="Renter.InstagramSocial" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Renter.TwitterSocial" class="control-label"></label>
-                <input asp-for="Renter.TwitterSocial" class="form-control" />
-                <span asp-validation-for="Renter.TwitterSocial" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Renter.ProfileUrl" class="control-label"></label>
-                <input asp-for="Renter.ProfileUrl" class="form-control" />
-                <span asp-validation-for="Renter.ProfileUrl" class="text-danger"></span>
-            </div>
-            @*<div class="form-group">
-                <input type="hidden" asp-for="Preferences[1].Id" />
-            </div>*@
-            <div class="form-group">
-                <label class="control-label">1. How important is it that you are able to smoke?</label>
-                <input asp-for="Value[0]" class="form-control" />
-                <span asp-validation-for="Value[0]" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">2. How important is it that you can consume alcohol?</label>
-                <input asp-for="Value[1]" class="form-control" />
-                <span asp-validation-for="Value[1]" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">3. How important is it to be able to host a party?</label>
-                <input asp-for="Value[2]" class="form-control" />
-                <span asp-validation-for="Value[2]" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">4. How important is it to have an in-house washer/dryer?</label>
-                <input asp-for="Value[3]" class="form-control" />
-                <span asp-validation-for="Value[3]" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">5. How important is it that your roommate is very clean?</label>
-                <input asp-for="Value[4]" class="form-control" />
-                <span asp-validation-for="Value[4]" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">6. How important is it to have a quiet environment?</label>
-                <input asp-for="Value[5]" class="form-control" />
-                <span asp-validation-for="Value[5]" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">7. How important is easy access to parking?</label>
-                <input asp-for="Value[6]" class="form-control" />
-                <span asp-validation-for="Value[6]" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">8. How important is it to have an air conditioner in the unit?</label>
-                <input asp-for="Value[7]" class="form-control" />
-                <span asp-validation-for="Value[7]" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">9. How important is it to have a gym in or near location?</label>
-                <input asp-for="Value[8]" class="form-control" />
-                <span asp-validation-for="Value[8]" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <script src="~/js/jquery-3.4.1.min.js"></script>
+    <h4>Renter</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form enctype="multipart/form-data" asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Renter.FirstName" class="control-label"></label>
+                    <input asp-for="Renter.FirstName" class="form-control" />
+                    <span asp-validation-for="Renter.FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Renter.LastName" class="control-label"></label>
+                    <input asp-for="Renter.LastName" class="form-control" />
+                    <span asp-validation-for="Renter.LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Renter.FacebookSocial" class="control-label"></label>
+                    <input asp-for="Renter.FacebookSocial" class="form-control" />
+                    <span asp-validation-for="Renter.FacebookSocial" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Renter.InstagramSocial" class="control-label"></label>
+                    <input asp-for="Renter.InstagramSocial" class="form-control" />
+                    <span asp-validation-for="Renter.InstagramSocial" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Renter.TwitterSocial" class="control-label"></label>
+                    <input asp-for="Renter.TwitterSocial" class="form-control" />
+                    <span asp-validation-for="Renter.TwitterSocial" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Renter.ProfileUrl" class="control-label"></label>
+                    <div class="custom-file">
+                        <input type="file" asp-for="Renter.ProfileUrl" class="form-control custom-file-input" id="customFile"/>
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                    <span asp-validation-for="Renter.ProfileUrl" class="text-danger"></span>
+                </div>
+                @*<div class="form-group">
+                        <input type="hidden" asp-for="Preferences[1].Id" />
+                    </div>*@
+                <div class="form-group">
+                    <label class="control-label">1. How important is it that you are able to smoke?</label>
+                    <input asp-for="Value[0]" class="form-control" />
+                    <span asp-validation-for="Value[0]" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">2. How important is it that you can consume alcohol?</label>
+                    <input asp-for="Value[1]" class="form-control" />
+                    <span asp-validation-for="Value[1]" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">3. How important is it to be able to host a party?</label>
+                    <input asp-for="Value[2]" class="form-control" />
+                    <span asp-validation-for="Value[2]" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">4. How important is it to have an in-house washer/dryer?</label>
+                    <input asp-for="Value[3]" class="form-control" />
+                    <span asp-validation-for="Value[3]" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">5. How important is it that your roommate is very clean?</label>
+                    <input asp-for="Value[4]" class="form-control" />
+                    <span asp-validation-for="Value[4]" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">6. How important is it to have a quiet environment?</label>
+                    <input asp-for="Value[5]" class="form-control" />
+                    <span asp-validation-for="Value[5]" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">7. How important is easy access to parking?</label>
+                    <input asp-for="Value[6]" class="form-control" />
+                    <span asp-validation-for="Value[6]" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">8. How important is it to have an air conditioner in the unit?</label>
+                    <input asp-for="Value[7]" class="form-control" />
+                    <span asp-validation-for="Value[7]" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">9. How important is it to have a gym in or near location?</label>
+                    <input asp-for="Value[8]" class="form-control" />
+                    <span asp-validation-for="Value[8]" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+    @section scripts{
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".custom-file-input").on("change", function () {
+                    var fileName = $(this).val().split("\\").pop();
+                    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                })
+            });
+
+        // Add the following code if you want the name of the file appear on select
+        //$(".custom-file-input").on("change", function () {
+        //    var fileName = $(this).val().split("\\").pop();
+        //    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        //});
+        </script>
+    }
 
 </body>
 </html>

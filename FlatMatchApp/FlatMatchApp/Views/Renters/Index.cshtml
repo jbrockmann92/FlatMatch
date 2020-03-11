@@ -54,11 +54,13 @@
     <script>
     var geocoder;
     var map;
+    //var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    //var labelIndex = 0;
     function initialize() {
         geocoder = new google.maps.Geocoder();
         var latlng = new google.maps.LatLng(43.0389, -87.9065); //This is from https://developers.google.com/maps/documentation/javascript/geocoding#GeocodingRequests
         var mapOptions = {
-            zoom: 13,
+            zoom: 14,
             center: latlng
         }
         map = new google.maps.Map(document.getElementById('map'), mapOptions);
@@ -77,6 +79,7 @@
                 if (status == 'OK') {
                     map.setCenter(results[0].geometry.location);
                     var marker = new google.maps.Marker({
+                        //label: labels[labelIndex++], //couldn't get labels to work, commenting out to potentially add later
                         map: map,
                         position: results[0].geometry.location
                     });
@@ -88,7 +91,7 @@
     }
     </script>
     <script async defer
-            @*src="https://maps.googleapis.com/maps/api/js?key= + @API_KEYS.GoogleAPI">*@
+            src="https://maps.googleapis.com/maps/api/js?key= + @API_KEYS.GoogleAPI">
     </script>
     <script type="text/javascript" src="~/js/site.js"></script>
 </body>
