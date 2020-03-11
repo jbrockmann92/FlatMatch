@@ -12,5 +12,6 @@ namespace FlatMatchApp.Models
         public List<int> Value { get; set; }
         public Leaseholder Leaseholder { get; set; }
         public List<Leaseholder> Leaseholders { get; set; }
+        public List<UserPreferences> UserPreferences { get; set; }
     }
 }
