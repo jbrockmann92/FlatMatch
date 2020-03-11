@@ -36,14 +36,19 @@ namespace FlatMatchApp.Controllers
                 return RedirectToAction("Create");
             }
             viewModel.Renter = renter;
-            var leaseholders = _context.Leaseholders
-                                    .Include(l => l.Property)
-                                    .Include(l => l.Property.Address)
-                                    .ToList();
-            //leaseholders = leaseholders.Where( l => l.Property.Address.City == )
-            viewModel.Leaseholders = leaseholders;
-            Matcher matcher = new Matcher(_context);
-            matcher.MatchUsers(renter, 53203);
+            //var leaseholders = _context.Leaseholders
+            //                        .Include(l => l.Property)
+            //                        .Include(l => l.Property.Address)
+            //                        .ToList();
+            ////leaseholders = leaseholders.Where( l => l.Property.Address.City == )
+            //viewModel.Leaseholders = leaseholders;
+            //Matcher matcher = new Matcher(_context);
+            //matcher.MatchUsers(renter, 53203);
+
+            //Commented out the leaseholders Include statements because I have the same thing in the algorithm, and I think it's better there
+
+            viewModel.Leaseholders = MatchUsers(renter, "Milwaukee");
+
             return View(viewModel);
         }
 
@@ -103,10 +108,6 @@ namespace FlatMatchApp.Controllers
 
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
-
-                
-
-                
             }
             //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", renter.UserId);
             return View(renterViewModel);
@@ -203,6 +204,57 @@ namespace FlatMatchApp.Controllers
         private bool RenterExists(int id)
         {
             return _context.Renters.Any(e => e.Id == id);
+        }
+
+        public List<Leaseholder> MatchUsers(Renter renter, string City) //This means we'll have to have both a renter and a Zip passed into this method
+        {
+
+            var leaseholders = _context.Leaseholders.Include(l => l.Property).Include(l => l.Property.Address).ToList().Where(l => l.Property.Address.City == City).ToList();
+            List<Leaseholder> finalLeaseholders = new List<Leaseholder>();
+            List<int[,]> tempLeaseholders = new List<int[,]>();
+            int leaseholderValue = 0;
+            int[,] holder_score = new int[leaseholders.Count, 2];
+            var rPrefs = _context.UserPreferences.Where(u => u.UserId == renter.UserId).ToList();
+            //I think that's right
+
+            for (int i = 0; i < leaseholders.Count; i++)
+            {
+                var lPrefs = _context.UserPreferences.Where(u => u.UserId == leaseholders[i].UserId).ToList();
+
+                for (int j = 0; j < 11; j++)
+                {
+                    var lPrefsValue = lPrefs[j].Value;
+                    var rPrefsValue = rPrefs[j].Value;
+
+                    leaseholderValue += Math.Abs(lPrefsValue - rPrefsValue);
+                }
+                holder_score[i, 0] = leaseholderValue;
+                holder_score[i, 1] = leaseholders[i].Id;
+                tempLeaseholders.Add(holder_score);
+            }
+
+            finalLeaseholders = SortLeaseholders(tempLeaseholders);
+            return finalLeaseholders;
+            //Might want to return a list or IQueryable of leaseholders. Or RedirectToAction("Index", IQueryable<Leaseholder>)
+            //or something similar
+        }
+
+
+        //This could also be where we grab the images and put them into a list?
+
+        public List<Leaseholder> SortLeaseholders(List<int[,]> leaseholdersArrayList)
+        {
+            List<Leaseholder> leaseholders = new List<Leaseholder>();
+            var leaseholdersArrays = leaseholdersArrayList.OrderBy(l => l[0, 0]).ToList();
+            //Will only take the first one right now. Might have to do a for loop to actually sort this based on the [0] of each array in the array
+
+            for (int i = 0; i < leaseholdersArrays.Count; i++)
+            {
+                //Should be able to use this for loop to sort if necessary
+                var tempList = leaseholdersArrays[i];
+                leaseholders.Add(_context.Leaseholders.Where(l => l.Id == tempList[i, 1]).FirstOrDefault());
+            }
+            return leaseholders;
         }
     }
 }

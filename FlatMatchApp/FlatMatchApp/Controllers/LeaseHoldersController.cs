@@ -43,9 +43,10 @@ namespace FlatMatchApp.Controllers
         {
             var viewModel = new LeaseholderViewModel();
             var leaseholder = _context.Leaseholders.Include(l => l.Property.Address).FirstOrDefault(l => l.Id == id);
-            //var rPrefs = _context.UserPreferences.Where(u => u.UserId == leaseholder.UserId).ToList();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var rPrefs = _context.UserPreferences.Include(l => l.PreferenceName).Where(u => u.UserId == userId).ToList();
             viewModel.Leaseholder = leaseholder;
-            
+            viewModel.UserPreferences = rPrefs;
             return View(viewModel);
         }
         // GET: LeaseHolder/Create

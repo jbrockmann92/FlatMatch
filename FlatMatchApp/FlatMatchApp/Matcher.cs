@@ -10,18 +10,19 @@ using System.Threading.Tasks;
 
 namespace FlatMatchApp
 {
-    //JBrockmann
     public class Matcher
     {
         private readonly ApplicationDbContext _context;
+
         public Matcher(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public List<Leaseholder> MatchUsers(Renter renter, int Zip) //This means we'll have to have both a renter and a Zip passed into this method
+        public List<Leaseholder> MatchUsers(Renter renter, string City) //This means we'll have to have both a renter and a Zip passed into this method
         {
-            var leaseholders = _context.Leaseholders.Include(l => l.Property).Include(l => l.Property.Address).ToList().Where(l => l.Property.Address.ZipCode == Zip.ToString()).ToList();
+
+            var leaseholders = _context.Leaseholders.Include(l => l.Property).Include(l => l.Property.Address).ToList().Where(l => l.Property.Address.City == City).ToList();
             List<Leaseholder> finalLeaseholders = new List<Leaseholder>();
             List<int[,]> tempLeaseholders = new List<int[,]>();
             int leaseholderValue = 0;
@@ -50,6 +51,9 @@ namespace FlatMatchApp
             //Might want to return a list or IQueryable of leaseholders. Or RedirectToAction("Index", IQueryable<Leaseholder>)
             //or something similar
         }
+
+
+        //This could also be where we grab the images and put them into a list?
 
         public List<Leaseholder> SortLeaseholders(List<int[,]> leaseholdersArrayList)
         {
