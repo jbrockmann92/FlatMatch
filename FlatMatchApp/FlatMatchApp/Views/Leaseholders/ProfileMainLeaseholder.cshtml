@@ -1,12 +1,12 @@
-﻿@model FlatMatchApp.Models.Leaseholder
+﻿@model FlatMatchApp.Models.LeaseholderViewModel
 
 @{
     ViewData["Title"] = "ProfileMain";
 }
 
 <h1>ProfileMain</h1>
-<h3>Welcome, @Model.FirstName!</h3>
-<img src="@Model.ProfileUrl" />
+<h3>Welcome, @Model.Leaseholder.FirstName!</h3>
+<img src="@Model.Leaseholder.ProfileUrl" />
 
 <div>
     <h4>Leaseholder</h4>
@@ -17,7 +17,7 @@
         </dt>
         <dd class="col-sm-10">
             @{
-                foreach (Preference preference in Model.Preferences)
+                foreach (int value in Model.Value)
                 {
                     Html.DisplayFor(model => model.Preferences);
                     //Won't format correctly, but this is the basic idea
@@ -26,7 +26,7 @@
             @*Currently null until we assign from the database using the junction table in the controller
                 Would be cool to give them the option to change preferences from here*@
     </dl>
-    @*Probably want something here with their available room. At least a link to where they can see it?*@
+
 </div>
 <div>
     <a asp-action="Index">Search</a>

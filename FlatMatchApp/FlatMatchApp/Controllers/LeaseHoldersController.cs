@@ -61,8 +61,6 @@ namespace FlatMatchApp.Controllers
         public IActionResult Create(LeaseholderViewModel leaseholderViewModel)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //leaseholderViewModel.Leaseholder.UserId = userId;
-            //var value = leaseholderViewModel.Value;
             var leaseholder = leaseholderViewModel.Leaseholder;
             var value = leaseholderViewModel.Value;
             leaseholder.UserId = userId;
