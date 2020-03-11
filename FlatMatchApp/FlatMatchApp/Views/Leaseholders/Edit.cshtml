@@ -1,4 +1,4 @@
-﻿@model FlatMatchApp.Models.Leaseholder
+﻿@model FlatMatchApp.Models.LeaseholderViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -12,26 +12,42 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Leaseholder.Id" />
             <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+                <label asp-for="Leaseholder.FirstName" class="control-label"></label>
+                <input asp-for="Leaseholder.FirstName" class="form-control" />
+                <span asp-validation-for="Leaseholder.FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+                <label asp-for="Leaseholder.LastName" class="control-label"></label>
+                <input asp-for="Leaseholder.LastName" class="form-control" />
+                <span asp-validation-for="Leaseholder.LastName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Leaseholder.ProfileUrl" class="control-label"></label>
+                <input asp-for="Leaseholder.ProfileUrl" class="form-control" />
+                <span asp-validation-for="Leaseholder.ProfileUrl" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PropertyId" class="control-label"></label>
-                <select asp-for="PropertyId" class="form-control" asp-items="ViewBag.PropertyId"></select>
-                <span asp-validation-for="PropertyId" class="text-danger"></span>
+                <label asp-for="Leaseholder.Property.isAvailable" class="control-label"></label>
+                <input asp-for="Leaseholder.Property.isAvailable" class="form-control" />
+                <span asp-validation-for="Leaseholder.Property.isAvailable" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
+                <label asp-for="Leaseholder.Property.Price" class="control-label"></label>
+                <input asp-for="Leaseholder.Property.Price" class="form-control" />
+                <span asp-validation-for="Leaseholder.Property.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Leaseholder.Property.SquareFootage" class="control-label"></label>
+                <input asp-for="Leaseholder.Property.SquareFootage" class="form-control" />
+                <span asp-validation-for="Leaseholder.Property.SquareFootage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Leaseholder.Property.NumberBedrooms" class="control-label"></label>
+                <input asp-for="Leaseholder.Property.NumberBedrooms" class="form-control" />
+                <span asp-validation-for="Leaseholder.Property.NumberBedrooms" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

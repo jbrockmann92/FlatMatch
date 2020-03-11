@@ -26,7 +26,7 @@ namespace FlatMatchApp.Controllers
         }
 
         // GET: LeaseHolder
-        public IActionResult Index() //RP
+        public IActionResult Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -45,12 +45,14 @@ namespace FlatMatchApp.Controllers
         {
             var viewModel = new LeaseholderViewModel();
             var leaseholder = _context.Leaseholders.Include(l => l.Property.Address).FirstOrDefault(l => l.Id == id);
-            //var rPrefs = _context.UserPreferences.Where(u => u.UserId == leaseholder.UserId).ToList();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var rPrefs = _context.UserPreferences.Include(l => l.PreferenceName).Where(u => u.UserId == userId).ToList();
             viewModel.Leaseholder = leaseholder;
 
             //Jbrockmann
             viewModel.Value.Add(CheckImageBrightness(System.Drawing.Image.FromFile(@"C:\Users\Your Surface Pro 4\Documents\DCC\DCC Projects\Week 9\FlatMatch"))); //Add this to the values list, then just grab length - 1 for the if statement in the <script>            
             
+            viewModel.UserPreferences = rPrefs;
             return View(viewModel);
         }
         // GET: LeaseHolder/Create
@@ -84,37 +86,31 @@ namespace FlatMatchApp.Controllers
         }
 
         // GET: LeaseHolder/Edit/5
-        public ActionResult Edit(int? id) //RP
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var leaseholder = _context.Leaseholders.Include(l => l.Property).FirstOrDefault(l => l.Id == id);
+            var viewModel = new LeaseholderViewModel();
+            viewModel.Leaseholder = leaseholder;
+
+            return View(viewModel);
+        }
+        [HttpPost]
+        public ActionResult Edit(LeaseholderViewModel leaseholderViewModel)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var leaseholder = _context.Leaseholders.FirstOrDefault(l => l.UserId == userId);
-            return View(leaseholder);
-        }
+            leaseholderViewModel.Leaseholder.UserId = userId;
+            var leaseholderDb = _context.Leaseholders.Include(l => l.Property).Single(l => l.UserId == userId);
+            leaseholderDb.FirstName = leaseholderViewModel.Leaseholder.FirstName;
+            leaseholderDb.LastName = leaseholderViewModel.Leaseholder.LastName;
+            leaseholderDb.ProfileUrl = leaseholderViewModel.Leaseholder.ProfileUrl;
+            leaseholderDb.Property.isAvailable = leaseholderViewModel.Leaseholder.Property.isAvailable;
+            leaseholderDb.Property.SquareFootage = leaseholderViewModel.Leaseholder.Property.SquareFootage;
+            leaseholderDb.Property.Price = leaseholderViewModel.Leaseholder.Property.Price;
+            leaseholderDb.Property.NumberBedrooms = leaseholderViewModel.Leaseholder.Property.NumberBedrooms;
 
-        // POST: LeaseHolder/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("FirstName,LastName")] Leaseholder leaseholder) //RP
-        {
-            if (id != leaseholder.Id)
-            {
-                return NotFound();
-            }
-            if (ModelState.IsValid)
-            {
-                // TODO: Add update logic here
-                Leaseholder editLeaseholder = _context.Leaseholders.Find(id);
-                editLeaseholder.FirstName = leaseholder.FirstName;
-                editLeaseholder.LastName = leaseholder.LastName;
-                editLeaseholder.Property.Address.StreetName = leaseholder.Property.Address.StreetName;
-                editLeaseholder.Property.Address.ApartmentNumber = leaseholder.Property.Address.ApartmentNumber;
-                editLeaseholder.Property.Address.City = leaseholder.Property.Address.City;
-                editLeaseholder.Property.Address.State = leaseholder.Property.Address.State;
-                editLeaseholder.Property.Address.ZipCode = leaseholder.Property.Address.ZipCode;
-            }
-
-            return RedirectToAction(nameof(Index));
-
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: LeaseHolder/Delete/5
