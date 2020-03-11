@@ -2,97 +2,111 @@
 
 @{
     ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_RenterLayout.cshtml";
 }
+<!DOCTYPE html>
 
-<h1>Details</h1>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <h1>Details</h1>
 
     <div>
         <h4>Leaseholder</h4>
-        
-    <dl class="row">
-        <dd>
-            <img src="@Html.DisplayFor(model => model.Leaseholder.ProfileUrl)" />
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Leaseholder.ProfileUrl)
-        </dt>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Leaseholder.FirstName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Leaseholder.FirstName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Leaseholder.LastName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Leaseholder.LastName)
-        </dd>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Leaseholder.Property.Type)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Leaseholder.Property.Type)
-        </dt>
+        <div class="card-img"><img src="@Html.DisplayFor(model => model.Leaseholder.ProfileUrl)" /></div>
+        <div class="card-footer">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Leaseholder.FirstName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Leaseholder.FirstName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Leaseholder.LastName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Leaseholder.LastName)
+            </dd>
+        </div>
+        <dl class="row">
+            <dd>
 
-        <dd class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Leaseholder.Property)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Leaseholder.Property)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Leaseholder.Property.Address.City)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Leaseholder.Property.Address.City)
-        </dt>
-       
-        <dd class=" col-sm-10">
-            @foreach (var item in Model.UserPreferences)
-            {
+            </dd>
 
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Leaseholder.Property.Type)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Leaseholder.Property.Type)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Leaseholder.Property.Address.City)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Leaseholder.Property.Address.City)
+            </dd>
 
-                <div>
+            <div class="table-bordered">
+                <dd class=" col-sm-10">
+                    @Html.DisplayFor(model => model.Leaseholder.Property.Activities)
+                </dd>
+                <dd class=" col-sm-10">
+                    @Html.DisplayFor(model => model.Leaseholder.Property.Address)
+                </dd>
+                <dd class=" col-sm-10">
+                    @Html.DisplayFor(model => model.Leaseholder.Property.NumberBedrooms)
+                </dd>
+                <dd class=" col-sm-10">
+                    @Html.DisplayFor(model => model.Leaseholder.Property.SquareFootage)
+                </dd>
+                <dd class=" col-sm-10">
+                    @Html.DisplayFor(model => model.Leaseholder.Property.Price)
+                </dd>
+                <dd class=" col-sm-10">
+                    @Html.DisplayFor(model => model.Leaseholder.Property.isAvailable)
+                </dd>
+            </div>
+
+            <dd class=" col-sm-10">
+                @foreach (var item in Model.UserPreferences)
+                {
+                <dt class="table-">
                     @Html.DisplayFor(modelItem => item.PreferenceName.Name)
-                </div>
-                <div>
+                </dt>
+                <dt class="table">
                     @Html.DisplayFor(modelItem => item.Value)
-                </div>
-                @*<div>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </div>*@
-
+                </dt>
             }
 
-        </dd>
-    </dl>
-</div>
-
-    <div>
-        <a asp-action="Edit" asp-route-id="@Model.Leaseholder.Id" class="btn btn-danger">Edit</a> |
-        <a asp-action="Index">Back to List</a>
-    </div>
-
-    <div>
-        <div style="margin-top: 20px; margin-bottom: 20px; color: black">
-            Click <button onclick="recommendations()">Here</button> if you'd like to see some recommendations about how to improve your profile
-        </div>
-        <div style="border-color: black; border-width: 4px; color: red; margin-bottom: 10px">
-            <hr />
-            <div id="Photos">
-            </div>
-            <div id="Description">
-            </div>
-            <div id="Price">
-            </div>
-            <div id="Random">
-            </div>
+                </dd>
+            </dl>
         </div>
 
-        <script type="text/javascript">
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Leaseholder.Id" class="btn btn-danger">Edit</a> |
+            <a asp-action="Index">Back to List</a>
+        </div>
+
+        <div>
+            <div style="margin-top: 20px; margin-bottom: 20px; color: black">
+                Click <button onclick="recommendations()">Here</button> if you'd like to see some recommendations about how to improve your profile
+            </div>
+            <div style="border-color: black; border-width: 4px; color: red; margin-bottom: 10px">
+                <hr />
+                <div id="Photos">
+                </div>
+                <div id="Description">
+                </div>
+                <div id="Price">
+                </div>
+                <div id="Random">
+                </div>
+            </div>
+
+            <script type="text/javascript">
             function recommendations() {
                 //Need to change this once we decide how we're storing photos. If photo count is less than 3 or something
                 document.getElementById("Photos").innerHTML = "+ We would recommend adding another photo or two to really make your profile pop!";
@@ -112,6 +126,8 @@
                     }
                 }
             }
-        </script>
-    </div>
+            </script>
+        </div>
+    </body>
+</html>
 
