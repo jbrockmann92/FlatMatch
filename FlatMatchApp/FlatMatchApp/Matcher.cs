@@ -10,18 +10,19 @@ using System.Threading.Tasks;
 
 namespace FlatMatchApp
 {
-    //JBrockmann
-    public static class Matcher
+    public class Matcher
     {
-        public static ApplicationDbContext _context;
-        //public Matcher(ApplicationDbContext context)
-        //{
-        //    _context = context;
-        //}
+        private readonly ApplicationDbContext _context;
 
-        public static List<Leaseholder> MatchUsers(Renter renter, int Zip) //This means we'll have to have both a renter and a Zip passed into this method
+        public Matcher(ApplicationDbContext context)
         {
-            var leaseholders = _context.Leaseholders.Include(l => l.Property).Include(l => l.Property.Address).ToList().Where(l => l.Property.Address.ZipCode == Zip.ToString()).ToList();
+            _context = context;
+        }
+
+        public List<Leaseholder> MatchUsers(Renter renter, string City) //This means we'll have to have both a renter and a Zip passed into this method
+        {
+
+            var leaseholders = _context.Leaseholders.Include(l => l.Property).Include(l => l.Property.Address).ToList().Where(l => l.Property.Address.City == City).ToList();
             List<Leaseholder> finalLeaseholders = new List<Leaseholder>();
             List<int[,]> tempLeaseholders = new List<int[,]>();
             int leaseholderValue = 0;
@@ -54,7 +55,7 @@ namespace FlatMatchApp
 
         //This could also be where we grab the images and put them into a list?
 
-        public static List<Leaseholder> SortLeaseholders(List<int[,]> leaseholdersArrayList)
+        public List<Leaseholder> SortLeaseholders(List<int[,]> leaseholdersArrayList)
         {
             List<Leaseholder> leaseholders = new List<Leaseholder>();
             var leaseholdersArrays = leaseholdersArrayList.OrderBy(l => l[0,0]).ToList();
