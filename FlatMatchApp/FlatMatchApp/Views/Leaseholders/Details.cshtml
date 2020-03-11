@@ -52,25 +52,42 @@
         <a asp-action="Edit" asp-route-id="@Model.Leaseholder.Id" class="btn btn-danger">Edit</a> |
         <a asp-action="Index">Back to List</a>
     </div>
+    <hr />
     <div>
-        <h5>Recommendations:</h5>
-        <div>
-            Click <button onclick="recommendations()">Here</button>if you'd like to see some recommendations about how to improve your profile
+        <div style="margin-top: 20px; margin-bottom: 20px; color: black">
+            Click <button onclick="recommendations()">Here</button> if you'd like to see some recommendations about how to improve your profile
         </div>
-        <div id="Photos">
-        </div>
-        <div id="Description">
-        </div>
-        <div id="Price">
+        <div style="border-color: black; border-width: 4px; color: red; margin-bottom: 10px">
+            <hr />
+            <div id="Photos">
+            </div>
+            <div id="Description">
+            </div>
+            <div id="Price">
+            </div>
+            <div id="Random">
+            </div>
         </div>
 
         <script type="text/javascript">
             function recommendations() {
                 //Need to change this once we decide how we're storing photos. If photo count is less than 3 or something
-                document.getElementById("Photos").innerHTML = "We would recommend adding another photo or two to really make your profile pop!";
+                document.getElementById("Photos").innerHTML = "+ We would recommend adding another photo or two to really make your profile pop!";
                 //Description length of words or even letters < 300 or something
-                document.getElementById("Description").innerHTML = "We'd recommend adding more on the description section. People like to know what they're getting into."
-                document.getElementById("Price").innerHTML = "Your price is pretty high. You might want to think about lowering it to attract more renters."
+                document.getElementById("Description").innerHTML = "+ We'd recommend adding more on the description section. People like to know what they're getting into."
+                document.getElementById("Price").innerHTML = "+ Your price is pretty high. You might want to think about lowering it to attract more renters."
+                //Would be cool to check image quality and brightness
+                //Would be cool to check price against other properties around
+                var items = @Model;
+                items.forEach(e => checkNull(e));
+                //Probably won't work. Interesting if it does though
+
+                function checkNull(item) {
+                    if (item === null) {
+                        document.getElementById("Random").innerHTML = "+ We'd recommend adding something for " + item.name;
+                        //Probably need to re-work
+                    }
+                }
             }
         </script>
     </div>
