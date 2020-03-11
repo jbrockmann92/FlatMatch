@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -50,7 +51,9 @@ namespace FlatMatchApp.Controllers
             viewModel.Leaseholder = leaseholder;
 
             //Jbrockmann
-            viewModel.Value.Add(CheckImageBrightness(System.Drawing.Image.FromFile(@"C:\Users\Your Surface Pro 4\Documents\DCC\DCC Projects\Week 9\FlatMatch"))); //Add this to the values list, then just grab length - 1 for the if statement in the <script>            
+            System.Drawing.Image image = System.Drawing.Image.FromFile(@"robin.jpg");
+            viewModel.Value = new List<int>();
+            viewModel.Value.Add(CheckImageBrightness(image)); //Add this to the values list, then just grab length - 1 for the if statement in the <script>            
             
             viewModel.UserPreferences = rPrefs;
             return View(viewModel);
@@ -146,8 +149,10 @@ namespace FlatMatchApp.Controllers
         {
             var smallImage = new Bitmap(image, new Size(1, 1));
             //Need to multiply by 100 before returning so it's right when I measure it
-            var color = smallImage.GetPixel(1, 1);
-            return Convert.ToInt32(100 * color.GetBrightness());
+            var color = smallImage.GetPixel(0, 0);
+            float brightness = color.GetBrightness();
+            int brightnessInt = Convert.ToInt32(100 * brightness);
+            return brightnessInt;
         }
     }
 }

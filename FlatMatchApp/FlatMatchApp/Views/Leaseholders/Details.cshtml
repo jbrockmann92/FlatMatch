@@ -108,8 +108,10 @@
 
         <script type="text/javascript">
             function recommendations() {
-                //Need to change this once we decide how we're storing photos. If photo count is less than 3 or something
-                document.getElementById("Photos").innerHTML = "+ We would recommend adding another photo or two to really make your profile pop!";
+                //Change to check image brightness and tell them images need to be brighter if necessary
+                if (@Model.Value[Model.Value.Count -1] < 50) {
+                                    document.getElementById("Photos").innerHTML = "+ We would recommend adding another photo or two to really make your profile pop!";
+                }
                 //Description length of words or even letters < 300 or something
                 document.getElementById("Description").innerHTML = "+ We'd recommend adding more on the description section. People like to know what they're getting into."
 
