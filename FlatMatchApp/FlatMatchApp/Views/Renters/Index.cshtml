@@ -29,7 +29,7 @@
                 <th>
                     City
                 </th>
-                <th><input id="myInput" type="text" placeholder="Filter"></th>
+                <th></th>
             </tr>
         </thead>
         <tbody id="myTable">
@@ -52,8 +52,9 @@
     <div class="container">
         <div class="row">&nbsp;</div>
         <div class="row">
-            <div class="col-2">User</div>
-            <div class="col-4"><input type="text" id="userInput" /></div>
+            
+            <div class="col-4"><input type="hidden" id="userInput" value="@User.Identity.Name" /></div>
+            <br />
         </div>
         <div class="row">
             <div class="col-2">Message</div>
