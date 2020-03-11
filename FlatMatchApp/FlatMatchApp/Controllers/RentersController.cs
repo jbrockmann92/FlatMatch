@@ -88,16 +88,17 @@ namespace FlatMatchApp.Controllers
         [ValidateAntiForgeryToken]
         //public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,UserId")] Renter renter) 
         //Above is original code.  A.Sanchez: Using simpler method from trashcollector, let me know if you have questions
-        public IActionResult Create(RenterViewModel renterViewModel)
+        public async Task<IActionResult> Create(RenterViewModel renterViewModel)
         {
             if (ModelState.IsValid)
             {
-                string uniqueFileName = UploadedFile(renterViewModel);
+                //string uniqueFileName = UploadedFile(renterViewModel);
                 //junction table created: UserPreferences
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var renter = renterViewModel.Renter;
                 var value = renterViewModel.Value; //Only holds an int, but the code was trying to use it as a collection in the for loop below
                 renter.UserId = userId;
+               // renter.ProfileUrl = uniqueFileName;
                 _context.Renters.Add(renter);
                 for (int i = 0; i < 9; i++)
                 {
@@ -110,7 +111,7 @@ namespace FlatMatchApp.Controllers
 
                 }
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", renter.UserId);
