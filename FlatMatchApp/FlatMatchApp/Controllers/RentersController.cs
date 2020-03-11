@@ -36,18 +36,16 @@ namespace FlatMatchApp.Controllers
                 return RedirectToAction("Create");
             }
             viewModel.Renter = renter;
-            //var leaseholders = _context.Leaseholders
-            //                        .Include(l => l.Property)
-            //                        .Include(l => l.Property.Address)
-            //                        .ToList();
+            var leaseholders = _context.Leaseholders
+                                    .Include(l => l.Property)
+                                    .Include(l => l.Property.Address)
+                                    .ToList();
             ////leaseholders = leaseholders.Where( l => l.Property.Address.City == )
-            //viewModel.Leaseholders = leaseholders;
-            //Matcher matcher = new Matcher(_context);
-            //matcher.MatchUsers(renter, 53203);
+            viewModel.Leaseholders = leaseholders;
 
             //Commented out the leaseholders Include statements because I have the same thing in the algorithm, and I think it's better there
 
-            viewModel.Leaseholders = MatchUsers(renter, "Milwaukee");
+            //viewModel.Leaseholders = MatchUsers(renter, "Milwaukee");
 
             return View(viewModel);
         }
@@ -221,7 +219,7 @@ namespace FlatMatchApp.Controllers
             {
                 var lPrefs = _context.UserPreferences.Where(u => u.UserId == leaseholders[i].UserId).ToList();
 
-                for (int j = 0; j < 11; j++)
+                for (int j = 0; j < 9; j++)
                 {
                     var lPrefsValue = lPrefs[j].Value;
                     var rPrefsValue = rPrefs[j].Value;

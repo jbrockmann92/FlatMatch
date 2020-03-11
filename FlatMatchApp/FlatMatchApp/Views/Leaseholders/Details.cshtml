@@ -55,7 +55,7 @@
     <hr />
     <div>
         <div style="margin-top: 20px; margin-bottom: 20px; color: black">
-            Click <button onclick="recommendations()">Here</button> if you'd like to see some recommendations about how to improve your profile
+            Click <button class="btn btn-dark" onclick="recommendations()">Here</button> if you'd like to see some recommendations about how to improve your profile
         </div>
         <div style="border-color: black; border-width: 4px; color: red; margin-bottom: 10px">
             <hr />
@@ -75,11 +75,16 @@
                 document.getElementById("Photos").innerHTML = "+ We would recommend adding another photo or two to really make your profile pop!";
                 //Description length of words or even letters < 300 or something
                 document.getElementById("Description").innerHTML = "+ We'd recommend adding more on the description section. People like to know what they're getting into."
-                document.getElementById("Price").innerHTML = "+ Your price is pretty high. You might want to think about lowering it to attract more renters."
+
+                var price = @Model.Leaseholder.Property.Price;
+                var footage = @Model.Leaseholder.Property.SquareFootage;
+                if ((price / footage) > 1) {
+                    document.getElementById("Price").innerHTML = "+ Your price is pretty high for the size of the property. You might want to think about lowering it to attract more renters."
+                }
                 //Would be cool to check image quality and brightness
                 //Would be cool to check price against other properties around
                 var items = @Model;
-                items.forEach(e => checkNull(e));
+                items.name.forEach(e => checkNull(e));
                 //Probably won't work. Interesting if it does though
 
                 function checkNull(item) {
@@ -88,6 +93,7 @@
                         //Probably need to re-work
                     }
                 }
+                //Nice because it limits to four recommendations, not to overwhelm, but will update with new rec if they fix one
             }
         </script>
     </div>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FlatMatchApp.Controllers
 {
@@ -45,6 +47,9 @@ namespace FlatMatchApp.Controllers
             var leaseholder = _context.Leaseholders.Include(l => l.Property.Address).FirstOrDefault(l => l.Id == id);
             //var rPrefs = _context.UserPreferences.Where(u => u.UserId == leaseholder.UserId).ToList();
             viewModel.Leaseholder = leaseholder;
+
+            //Jbrockmann
+            viewModel.Value.Add(CheckImageBrightness(System.Drawing.Image.FromFile(@"C:\Users\Your Surface Pro 4\Documents\DCC\DCC Projects\Week 9\FlatMatch"))); //Add this to the values list, then just grab length - 1 for the if statement in the <script>            
             
             return View(viewModel);
         }
@@ -141,8 +146,12 @@ namespace FlatMatchApp.Controllers
             return Redirect("Index");
         }
 
-
-        //Can create new method called AssignList() or something that takes in a List<Preference>, foreach's over the list and assigns them to the currently logged
-        //in user using that code David gave to us
+        public int CheckImageBrightness(System.Drawing.Image image)
+        {
+            var smallImage = new Bitmap(image, new Size(1, 1));
+            //Need to multiply by 100 before returning so it's right when I measure it
+            var color = smallImage.GetPixel(1, 1);
+            return Convert.ToInt32(100 * color.GetBrightness());
+        }
     }
 }
