@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace FlatMatchApp.Models
 {
@@ -12,5 +11,7 @@ namespace FlatMatchApp.Models
         public List<int> Value { get; set; }
         public Leaseholder Leaseholder { get; set; }
         public List<Leaseholder> Leaseholders { get; set; }
+        [Display(Name = "Profile Picture")]
+        public IFormFile ProfileUrl { get; set; }
     }
 }

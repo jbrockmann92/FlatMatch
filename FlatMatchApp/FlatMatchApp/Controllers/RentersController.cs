@@ -10,6 +10,9 @@ using FlatMatchApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using FlatMatchApp.ActionFilters;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace FlatMatchApp.Controllers
 {
@@ -18,10 +21,12 @@ namespace FlatMatchApp.Controllers
     public class RentersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public RentersController(ApplicationDbContext context)
+        public RentersController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            webHostEnvironment = hostEnvironment;
         }
 
         // GET: Renters
@@ -84,6 +89,7 @@ namespace FlatMatchApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                string uniqueFileName = UploadedFile(renterViewModel);
                 //junction table created: UserPreferences
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var renter = renterViewModel.Renter;
@@ -106,6 +112,21 @@ namespace FlatMatchApp.Controllers
             }
             //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", renter.UserId);
             return View(renterViewModel);
+        }
+        private string UploadedFile(RenterViewModel viewModel)
+        {
+            string uniqueFileName = null;
+            if (viewModel.ProfileUrl != null)
+            {
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "img");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + viewModel.ProfileUrl.FileName;
+                string FilePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(FilePath, FileMode.Create))
+                {
+                    viewModel.ProfileUrl.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
         }
 
         // GET: Renters/Edit/5

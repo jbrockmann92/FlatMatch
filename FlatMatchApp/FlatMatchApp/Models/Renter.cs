@@ -31,7 +31,7 @@ namespace FlatMatchApp.Models
         public string InstagramSocial { get; set; }
         [Display(Name = "Link to Twitter")]
         public string TwitterSocial { get; set; }
-        [Display(Name = "Add a Profile Image URL")]
+        [Display(Name = "Add a Profile Image")]
         public string  ProfileUrl { get; set; }
 
     }
