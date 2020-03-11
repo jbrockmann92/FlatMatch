@@ -11,15 +11,15 @@ using System.Threading.Tasks;
 namespace FlatMatchApp
 {
     //JBrockmann
-    public class Matcher
+    public static class Matcher
     {
-        private readonly ApplicationDbContext _context;
-        public Matcher(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        public static ApplicationDbContext _context;
+        //public Matcher(ApplicationDbContext context)
+        //{
+        //    _context = context;
+        //}
 
-        public List<Leaseholder> MatchUsers(Renter renter, int Zip) //This means we'll have to have both a renter and a Zip passed into this method
+        public static List<Leaseholder> MatchUsers(Renter renter, int Zip) //This means we'll have to have both a renter and a Zip passed into this method
         {
             var leaseholders = _context.Leaseholders.Include(l => l.Property).Include(l => l.Property.Address).ToList().Where(l => l.Property.Address.ZipCode == Zip.ToString()).ToList();
             List<Leaseholder> finalLeaseholders = new List<Leaseholder>();
@@ -52,9 +52,9 @@ namespace FlatMatchApp
         }
 
 
-        //This could also be where we grab the images and put them into a list or something
+        //This could also be where we grab the images and put them into a list?
 
-        public List<Leaseholder> SortLeaseholders(List<int[,]> leaseholdersArrayList)
+        public static List<Leaseholder> SortLeaseholders(List<int[,]> leaseholdersArrayList)
         {
             List<Leaseholder> leaseholders = new List<Leaseholder>();
             var leaseholdersArrays = leaseholdersArrayList.OrderBy(l => l[0,0]).ToList();

@@ -33,7 +33,11 @@
             </tr>
         </thead>
         <tbody id="myTable">
-            @foreach (var item in Model.Leaseholders)
+            @{
+                var leaseholders = Matcher.MatchUsers(Model.Renter, 53203);
+                //Need to either pass in the zip they've chosen or make zip a property of the model
+            }
+            @foreach (var item in leaseholders)
             {
                 <tr>
                     <td>
@@ -69,11 +73,11 @@
 
     function codeAddress() {
         var addresses = [];
-        @foreach (var leaseholder in Model.Leaseholders)
+        @foreach (var leaseholder in leaseholders)
         {
             @:addresses.push("@leaseholder.Property.Address.StreetName + @leaseholder.Property.Address.City + @leaseholder.Property.Address.State")
         }
-        for (var i = 0; i < @Model.Leaseholders.Count; i++) {
+        for (var i = 0; i < @leaseholders.Count; i++) {
             var address = addresses[i];
             geocoder.geocode( { 'address': address}, function(results, status) {
                 if (status == 'OK') {
