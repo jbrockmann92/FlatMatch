@@ -49,7 +49,6 @@ namespace FlatMatchApp.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var rPrefs = _context.UserPreferences.Include(l => l.PreferenceName).Where(u => u.UserId == userId).ToList();
             viewModel.Leaseholder = leaseholder;
-
             //Jbrockmann
             System.Drawing.Image image = System.Drawing.Image.FromFile(@"dark.jpeg");
             viewModel.Value = new List<int>();

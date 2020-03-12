@@ -1,4 +1,4 @@
-﻿@model FlatMatchApp.Models.Leaseholder
+﻿@model FlatMatchApp.Models.RenterViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -29,7 +29,11 @@
                 @Html.DisplayNameFor(model => model.FirstName)
             </dt>
             <dd class="col-sm-10">
+<<<<<<< HEAD
                 @Html.DisplayFor(model => model.FirstName)
+=======
+                @Html.DisplayFor(model => model.Leaseholder.FirstName) @Html.DisplayFor(model => model.Leaseholder.LastName)
+>>>>>>> e7ba08769898a3fafd5df73b87ef6124a21ba457
             </dd>
         </dl>
     </div>
@@ -53,6 +57,7 @@
         placeMarkers();
     }
 
+<<<<<<< HEAD
         function placeMarkers() {
             axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
                 params: {
@@ -95,6 +100,24 @@
             });
         }
     }*@
+=======
+    function codeAddress() {
+        var address = "@Model.Leaseholder.Property.Address.StreetName + @Model.Leaseholder.Property.Address.City + @Model.Leaseholder.Property.Address.State";
+        geocoder.geocode( { 'address': address}, function(results, status) {
+            if (status == 'OK') {
+                map.setCenter(results[0].geometry.location);
+                var marker = new google.maps.Marker({
+                    //label: labels[labelIndex++], //couldn't get labels to work, commenting out to potentially add later
+                    map: map,
+                    position: results[0].geometry.location
+                });
+            } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+    }
+
+>>>>>>> e7ba08769898a3fafd5df73b87ef6124a21ba457
     </script>
 
     <script async defer

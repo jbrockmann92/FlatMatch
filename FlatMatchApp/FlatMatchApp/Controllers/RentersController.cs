@@ -53,22 +53,18 @@ namespace FlatMatchApp.Controllers
         }
 
         // GET: Renters/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        public IActionResult Details(int? id)
+        {            
+            var viewModel = new RenterViewModel();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            viewModel.Leaseholder = _context.Leaseholders
+                                        .Include(l => l.Property)
+                                        .Include(l => l.Property.Address)
+                                        .FirstOrDefault(l => l.Id == id);
+            viewModel.UserPreferences = _context.UserPreferences.Include(u => u.PreferenceName).Where(u => u.UserId == userId).ToList();
+                     
 
-            var leaseholder = await _context.Leaseholders
-                .Include(r => r.IdentityUser)
-                .FirstOrDefaultAsync(l => l.Id == id);
-            if (leaseholder == null)
-            {
-                return NotFound();
-            }
-
-            return View(leaseholder);
+            return View(viewModel);
         }
 
         // GET: Renters/Create
