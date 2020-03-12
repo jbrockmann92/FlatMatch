@@ -11,6 +11,9 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     <title>Details</title>
 </head>
 <body>
@@ -23,6 +26,8 @@
             </div>
             <div class="col-md-6">
                 <h4>Property Details</h4>
+                <p><a type="button" class="btn btn-primary" href="#ex1" rel="modal:open">Message User!</a></p>
+
                 <hr />
                 <dl class="row">
                     <dt class="col-md-3">
@@ -54,6 +59,40 @@
     <div>
         <a asp-action="Index">Back to List</a>
     </div>
+
+    @* Modal code *@
+    <div id="ex1" class="modal">
+        <div class="container">
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <div class="col-6">&nbsp;</div>
+                <div class="col-6">
+                    <form class="form-inline">
+                        <div class="input-prepend input-append">
+                            <input type="text" name="group-message" id="group-message-text" placeholder="Type a message" />
+                            <input type="text" name="group-name" id="group-name" placeholder="Type a group name" />
+                            <input type="button" id="groupmsg" class="btn btn-primary" value="Send to Group" />
+                            <input type="button" id="join-group" class="btn btn-primary" value="Join Group" />
+                            <input type="button" id="leave-group" class="btn btn-primary" value="Leave Group" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">&nbsp;</div>
+                <div class="col-6">
+                    <ul id="messagesList"></ul>
+                </div>
+            </div>
+        </div>
+        <a href="#" rel="modal:close">Close</a>
+    </div>
+
 
     <script>
     var geocoder;
@@ -103,6 +142,8 @@
                     }
                 });
         }
+        //Modal workload
+
 
     @*function codeAddress() {
         var addresses = [];
@@ -132,7 +173,14 @@
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key= + @API_KEYS.GoogleAPI">
     </script>
+    @* General javascript file *@
     <script type="text/javascript" src="~/js/site.js"></script>
-
+    @* Scripts for global chat *@
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat.js"></script>
+    @* Others *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 </body>
 </html>
