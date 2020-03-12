@@ -54,98 +54,95 @@
         <a href="#" rel="modal:close">Close</a>
     </div>
     <br />
-    <h1>Details</h1>
-    <p><a type="button" class="btn btn-primary" href="#ex1" rel="modal:open">See Messages!</a></p>
-    <div>
-        <div class="card">
-            <img src="@Model.Leaseholder.ProfileUrl" style="width:100%" />
-            <h4>@Model.Leaseholder.FirstName @Model.Leaseholder.LastName</h4>
-        </div>
-        <div class="card-img"><img src="@Html.DisplayFor(model => model.Leaseholder.ProfileUrl)" /></div>
-        <div class="card-footer">
-            <dl>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Leaseholder.FirstName)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Leaseholder.FirstName)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Leaseholder.LastName)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Leaseholder.LastName)
-                </dd>
-            </dl>
-        </div>
-        <div>          
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Leaseholder.Property.Type)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Leaseholder.Property.Type)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Leaseholder.Property.Address.City)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Leaseholder.Property.Address.City)
-            </dd>
-        </div>
-        <div class="table-bordered">
-            <dd class=" col-sm-10">
-                @Html.DisplayFor(model => model.Leaseholder.Property.Activities)
-            </dd>
-            <dd class=" col-sm-10">
-                @Html.DisplayFor(model => model.Leaseholder.Property.Address)
-            </dd>
-            <dd class=" col-sm-10">
-                @Html.DisplayFor(model => model.Leaseholder.Property.NumberBedrooms)
-            </dd>
-            <dd class=" col-sm-10">
-                @Html.DisplayFor(model => model.Leaseholder.Property.SquareFootage)
-            </dd>
-            <dd class=" col-sm-10">
-                @Html.DisplayFor(model => model.Leaseholder.Property.Price)
-            </dd>
-            <dd class=" col-sm-10">
-                @Html.DisplayFor(model => model.Leaseholder.Property.isAvailable)
-            </dd>
-        </div>
-        <div class=" col-sm-10">
-            @foreach (var item in Model.UserPreferences)
-            {
-                <div class="table-">
-                    @Html.DisplayFor(modelItem => item.PreferenceName.Name)
-                </div>
-                <div class="table">
-                    @Html.DisplayFor(modelItem => item.Value)
-                </div>
-            }
-        </div>
-    </div>
-    <div>
+    <h2>Your Profile</h2>
+    <p>
+        <a type="button" class="btn btn-primary" href="#ex1" rel="modal:open">See Messages!</a>
         <a asp-action="Edit" asp-route-id="@Model.Leaseholder.Id" class="btn btn-danger">Edit</a> |
         <a asp-action="Index">Back to List</a>
-    </div>
-
-    <div>
-        <div style="margin-top: 20px; margin-bottom: 20px; color: black">
-            Click <button class="btn btn-dark" onclick="recommendations()">Here</button> if you'd like to see some recommendations about how to improve your profile
+    </p>
+    <div class="row">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img" src="@Model.Leaseholder.ProfileUrl">
         </div>
-        <div style="border-color: black; border-width: 4px; color: red; margin-bottom: 10px">
-            <hr />
-            <div id="Photos">
+        <div class="col"></div>
+        <div class="col-md-4">
+            <h4>@Model.Leaseholder.FirstName @Model.Leaseholder.LastName</h4>
+            <table class="table table-sm">
+                <tr>
+                    <th>Address:</th>
+                    <td>@Model.Leaseholder.Property.Address.StreetName</td>
+                </tr>
+                @if (Model.Leaseholder.Property.Address.ApartmentNumber != null)
+                {
+                    <tr>
+                        <th>Apartment:</th>
+                        <td>@Model.Leaseholder.Property.Address.ApartmentNumber</td>
+                    </tr>
+                }
+                <tr>
+                    <th>City:</th>
+                    <td>@Model.Leaseholder.Property.Address.City</td>
+                </tr>
+                <tr>
+                    <th>Zip Code:</th>
+                    <td>@Model.Leaseholder.Property.Address.ZipCode</td>
+                </tr>
+                <tr>
+                    <th>Type of Property:</th>
+                    <td>@Model.Leaseholder.Property.Type</td>
+                </tr>
+                <tr>
+                    <th>Square Footage:</th>
+                    <td>@Model.Leaseholder.Property.SquareFootage</td>
+                </tr>
+                <tr>
+                    <th>Number of Bedrooms:</th>
+                    <td>@Model.Leaseholder.Property.NumberBedrooms</td>
+                </tr>
+                <tr>
+                    <th>Price:</th>
+                    <td>$@Model.Leaseholder.Property.Price</td>
+                </tr>
+            </table>
+        </div>        
+        <div class="col-md-4">            
+            <h4>Preferences</h4>
+            <table class="table table-sm">
+                @foreach (var item in Model.UserPreferences)
+                {
+                    <tr>
+                        <th>
+                            @Html.DisplayFor(modelItem => item.PreferenceName.Name)
+                        </th>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Value)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div>
+
+        </div>
+
+        <div>
+            <div style="margin-top: 20px; margin-bottom: 20px; color: black">
+                Click <button class="btn btn-dark" onclick="recommendations()">Here</button> if you'd like to see some recommendations about how to improve your profile
             </div>
-            <div id="Description">
-            </div>
-            <div id="Price">
-            </div>
-            <div id="Random">
+            <div style="border-color: black; border-width: 4px; color: red; margin-bottom: 10px">
+                <hr />
+                <div id="Photos">
+                </div>
+                <div id="Description">
+                </div>
+                <div id="Price">
+                </div>
+                <div id="Random">
+                </div>
             </div>
         </div>
 
-        <script type="text/javascript">
+    <script type="text/javascript">
         function recommendations() {
             //Change to check image brightness and tell them images need to be brighter if necessary
             if (@Model.Value[Model.Value.Count -1] < 15) {
@@ -174,18 +171,18 @@
             }
             //Nice because it limits to four recommendations, not to overwhelm, but will update with new rec if they fix one
         }
-        </script>
-    </div>
+            </script>
+        
 
-    @* General javascript file *@
-    <script type="text/javascript" src="~/js/site.js"></script>
-    @* Scripts for global chat *@
-    <script src="~/js/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/chat.js"></script>
-    @* Others *@
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+        @* General javascript file *@
+        <script type="text/javascript" src="~/js/site.js"></script>
+        @* Scripts for global chat *@
+        <script src="~/js/signalr/dist/browser/signalr.js"></script>
+        <script src="~/js/chat.js"></script>
+        @* Others *@
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
 </body>
 </html>
 
