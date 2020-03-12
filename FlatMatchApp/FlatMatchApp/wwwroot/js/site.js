@@ -3,6 +3,8 @@
 
 // Write your JavaScript code.
 
+
+
 $(document).ready(function () {
     $("#myInput").on("keyup", function () {
         var value = $(this).val().toLowerCase();

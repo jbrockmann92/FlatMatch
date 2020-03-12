@@ -13,5 +13,7 @@ namespace FlatMatchApp.Models
         public List<Leaseholder> Leaseholders { get; set; }
         [Display(Name = "Profile Picture")]
         public IFormFile ProfileUrl { get; set; }
+        public List<UserPreferences> UserPreferences { get; set; }
+
     }
 }

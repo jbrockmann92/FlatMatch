@@ -1,4 +1,4 @@
-﻿@model FlatMatchApp.Models.Leaseholder
+﻿@model FlatMatchApp.Models.RenterViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -10,6 +10,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Details</title>
 </head>
 <body>
@@ -25,10 +26,10 @@
         <hr />
         <dl class="row">
             <dt class="col-sm-2">
-                Leaseholder:
+                @Html.DisplayNameFor(model => model.Renter.FirstName)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)
+                @Html.DisplayFor(model => model.Leaseholder.FirstName) @Html.DisplayFor(model => model.Leaseholder.LastName)
             </dd>
         </dl>
     </div>
@@ -43,14 +44,47 @@
     //var labelIndex = 0;
     function initialize() {
         geocoder = new google.maps.Geocoder();
+        var address = @Model.Leaseholder.address;
+            geocoder.geocode( { 'address': address}, function(results, status) {
+                if (status == 'OK') {
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        //label: labels[labelIndex++], //couldn't get labels to work, commenting out to potentially add later
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
         var latlng = new google.maps.LatLng(43.0389, -87.9065); //This is from https://developers.google.com/maps/documentation/javascript/geocoding#GeocodingRequests
         var mapOptions = {
             zoom: 14,
             center: latlng
         }
         map = new google.maps.Map(document.getElementById('map'), mapOptions);
-        codeAddress();
+        placeMarkers();
     }
+
+        function placeMarkers() {
+            axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
+                params: {
+                    location: "-33.8670522,151.1957362",
+                    radius: 1500,
+                    type: "restaurant",
+                    key: 'AIzaSyDoYahnytRpdSmcUA7B7oOroMtbe5i7BQM'
+                }
+            })
+                .then(function (response) {
+                    for (place in response.data.results) {
+                        lat = response.data.results[place].geometry.location.lat;
+                        lng = response.data.results[place].geometry.location.lng;
+
+                        var marker = new google.maps.Marker({ position: { lat: lat, lng: lng }, map: map });
+                        console.log(lat);
+                    }
+                });
+        }
 
     @*function codeAddress() {
         var addresses = [];
@@ -74,6 +108,7 @@
             });
         }
     }*@
+
     </script>
 
     <script async defer
