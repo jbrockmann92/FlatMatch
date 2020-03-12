@@ -101,35 +101,32 @@
     //var labelIndex = 0;
     function initialize() {
         geocoder = new google.maps.Geocoder();
-        var address = "@Model.Leaseholder.Property.Address.StreetName + @Model.Leaseholder.Property.Address.City + @Model.Leaseholder.Property.Address.State";
-            geocoder.geocode( { 'address': address}, function(results, status) {
-                if (status == 'OK') {
-                    map.setCenter(results[0].geometry.location);
-                    var marker = new google.maps.Marker({
-                        //label: labels[labelIndex++], //couldn't get labels to work, commenting out to potentially add later
-                        map: map,
-                        position: results[0].geometry.location
-                    });
-                } else {
+        var address = "@Model.Leaseholder.Property.Address.StreetName".concat("@Model.Leaseholder.Property.Address.City").concat("@Model.Leaseholder.Property.Address.State");
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            var lat = results[0].geometry.location.lat;
+            var lng = results[0].geometry.location.lng;
+            if (status == 'OK') {
+                    var mapOptions = {
+                        zoom: 14,
+                        center: { lat: 43.037417, lng: -87.934474 }
+                        }
+                    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+                placeMarkers();
+                }
+                else {
                     alert('Geocode was not successful for the following reason: ' + status);
                 }
-            });
-        var latlng = new google.maps.LatLng(43.0389, -87.9065); //This is from https://developers.google.com/maps/documentation/javascript/geocoding#GeocodingRequests
-        var mapOptions = {
-            zoom: 14,
-            center: latlng
-        }
-        map = new google.maps.Map(document.getElementById('map'), mapOptions);
-        placeMarkers();
+            }); //This is from https://developers.google.com/maps/documentation/javascript/geocoding#GeocodingRequests
     }
 
         function placeMarkers() {
             axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
                 params: {
-                    location: "-33.8670522,151.1957362",
+                    location: "43.037417,-87.934474",
                     radius: 1500,
                     type: "restaurant",
-                    key: '@API_KEYS.GoogleAPI'
+                    key: "@API_KEYS.GoogleAPI"
+
                 }
             })
                 .then(function (response) {
