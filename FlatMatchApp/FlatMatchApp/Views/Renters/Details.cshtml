@@ -10,6 +10,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Details</title>
 </head>
 <body>
@@ -25,10 +26,10 @@
         <hr />
         <dl class="row">
             <dt class="col-sm-2">
-                Leaseholder:
+                @Html.DisplayNameFor(model => model.FirstName)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)
+                @Html.DisplayFor(model => model.FirstName)
             </dd>
         </dl>
     </div>
@@ -49,8 +50,28 @@
             center: latlng
         }
         map = new google.maps.Map(document.getElementById('map'), mapOptions);
-        codeAddress();
+        placeMarkers();
     }
+
+        function placeMarkers() {
+            axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
+                params: {
+                    location: "-33.8670522,151.1957362",
+                    radius: 1500,
+                    type: "restaurant",
+                    key: 'AIzaSyDoYahnytRpdSmcUA7B7oOroMtbe5i7BQM'
+                }
+            })
+                .then(function (response) {
+                    for (location in response) {
+                        lat = response.data.results[0].geometry.location.lat;
+                        lng = response.data.results[0].geometry.location.lng;
+
+                        var marker = new google.maps.Marker({ position: { lat: lat, lng: lng }, map: map });
+                        console.log(lat);
+                    }
+                });
+        }
 
     @*function codeAddress() {
         var addresses = [];
