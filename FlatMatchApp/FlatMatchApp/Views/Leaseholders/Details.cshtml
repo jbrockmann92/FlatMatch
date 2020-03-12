@@ -16,8 +16,9 @@
     <div class="container">
         <div class="row">&nbsp;</div>
         <div class="row">
-            <div class="col-2">User</div>
-            <div class="col-4"><input type="text" id="userInput" /></div>
+            
+            <div class="col-4"><input type="hidden" id="userInput" value="@User.Identity.Name" /></div>
+            <br />
         </div>
         <div class="row">
             <div class="col-2">Message</div>
@@ -140,9 +141,10 @@
         <script type="text/javascript">
             function recommendations() {
                 //Change to check image brightness and tell them images need to be brighter if necessary
-                if (@Model.Value[Model.Value.Count -1] < 50) {
-                                    document.getElementById("Photos").innerHTML = "+ We would recommend adding another photo or two to really make your profile pop!";
+                if (@Model.Value[Model.Value.Count -1] < 15) {
+                                    document.getElementById("Photos").innerHTML = "+ Looks like at least one of your photos is pretty dark. Make sure there's enough light!";
                 }
+
                 //Description length of words or even letters < 300 or something
                 document.getElementById("Description").innerHTML = "+ We'd recommend adding more on the description section. People like to know what they're getting into."
 

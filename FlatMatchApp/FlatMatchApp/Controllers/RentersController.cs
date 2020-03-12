@@ -49,8 +49,6 @@ namespace FlatMatchApp.Controllers
 
             //Commented out the leaseholders Include statements because I have the same thing in the algorithm, and I think it's better there
 
-            //viewModel.Leaseholders = MatchUsers(renter, "Milwaukee");
-
             return View(viewModel);
         }
 
@@ -62,15 +60,15 @@ namespace FlatMatchApp.Controllers
                 return NotFound();
             }
 
-            var renter = await _context.Renters
+            var leaseholder = await _context.Leaseholders
                 .Include(r => r.IdentityUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (renter == null)
+                .FirstOrDefaultAsync(l => l.Id == id);
+            if (leaseholder == null)
             {
                 return NotFound();
             }
 
-            return View(renter);
+            return View(leaseholder);
         }
 
         // GET: Renters/Create
