@@ -12,6 +12,7 @@ using FlatMatchApp.ActionFilters;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using System.Threading;
 
 namespace FlatMatchApp.Controllers
 {
@@ -48,6 +49,7 @@ namespace FlatMatchApp.Controllers
             viewModel.Leaseholders = leaseholders;
 
             //Commented out the leaseholders Include statements because I have the same thing in the algorithm, and I think it's better there
+            viewModel.Leaseholders = MatchUsers(renter, "Milwaukee");
 
             return View(viewModel);
         }
@@ -221,18 +223,17 @@ namespace FlatMatchApp.Controllers
 
         public List<Leaseholder> MatchUsers(Renter renter, string City) //This means we'll have to have both a renter and a Zip passed into this method
         {
-
             var leaseholders = _context.Leaseholders.Include(l => l.Property).Include(l => l.Property.Address).ToList().Where(l => l.Property.Address.City == City).ToList();
             List<Leaseholder> finalLeaseholders = new List<Leaseholder>();
             List<int[,]> tempLeaseholders = new List<int[,]>();
             int leaseholderValue = 0;
-            int[,] holder_score = new int[leaseholders.Count, 2];
             var rPrefs = _context.UserPreferences.Where(u => u.UserId == renter.UserId).ToList();
             //I think that's right
 
             for (int i = 0; i < leaseholders.Count; i++)
             {
                 var lPrefs = _context.UserPreferences.Where(u => u.UserId == leaseholders[i].UserId).ToList();
+                int[,] holder_score = new int[1, 2];
 
                 for (int j = 0; j < 9; j++)
                 {
@@ -241,8 +242,9 @@ namespace FlatMatchApp.Controllers
 
                     leaseholderValue += Math.Abs(lPrefsValue - rPrefsValue);
                 }
-                holder_score[i, 0] = leaseholderValue;
-                holder_score[i, 1] = leaseholders[i].Id;
+                //Adding a copy of the first along with its second iteration
+                holder_score[0, 0] = leaseholderValue;
+                holder_score[0, 1] = leaseholders[i].Id;
                 tempLeaseholders.Add(holder_score);
             }
 
@@ -258,14 +260,14 @@ namespace FlatMatchApp.Controllers
         public List<Leaseholder> SortLeaseholders(List<int[,]> leaseholdersArrayList)
         {
             List<Leaseholder> leaseholders = new List<Leaseholder>();
-            var leaseholdersArrays = leaseholdersArrayList.OrderBy(l => l[0, 0]).ToList();
             //Will only take the first one right now. Might have to do a for loop to actually sort this based on the [0] of each array in the array
 
-            for (int i = 0; i < leaseholdersArrays.Count; i++)
+            for (int i = 0; i < leaseholdersArrayList.Count + 1; i++)
             {
-                //Should be able to use this for loop to sort if necessary
-                var tempList = leaseholdersArrays[i];
-                leaseholders.Add(_context.Leaseholders.Where(l => l.Id == tempList[i, 1]).FirstOrDefault());
+                var bestMatch = leaseholdersArrayList.OrderByDescending(l => l[0,0]).First(); //Something is wrong with i here. It's going to go up as the list decreases in size
+                leaseholdersArrayList.Remove(bestMatch);
+
+                leaseholders.Add(_context.Leaseholders.Where(l => l.Id == bestMatch[0, 1]).FirstOrDefault());
             }
             return leaseholders;
         }
