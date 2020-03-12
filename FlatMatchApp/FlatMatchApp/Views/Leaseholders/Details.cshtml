@@ -10,6 +10,8 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Details</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     @* This is the chat box, let me know if you need to make changes or where you would like to place it, the scripts necessary for this are located at the bottom of the body *@
@@ -47,8 +49,11 @@
         <br />
         <h1>Details</h1>
 
-        <div>
-            <h4>Leaseholder</h4>
+        <div>            
+            <div class="card">
+                <img src="@Model.Leaseholder.ProfileUrl" style="width:100%" />
+                <h4>@Model.Leaseholder.FirstName @Model.Leaseholder.LastName</h4>
+            </div>
             <div class="card-img"><img src="@Html.DisplayFor(model => model.Leaseholder.ProfileUrl)" /></div>
             <div class="card-footer">
                 <dl>
@@ -66,7 +71,7 @@
                     </dd>
                 </dl>
             </div>
-            < class="row">
+            
             <dd>
 
             </dd>
