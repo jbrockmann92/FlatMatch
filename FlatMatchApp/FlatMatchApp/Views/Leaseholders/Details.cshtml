@@ -10,10 +10,16 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Details</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 </head>
 <body>
     @* This is the chat box, let me know if you need to make changes or where you would like to place it, the scripts necessary for this are located at the bottom of the body *@
-    
+
+    @* Modal code, this will not show until button below is clicked, it has a commented out label to easily spot*@
+    <div id="ex1" class="modal">
         <div class="container">
             <div class="row">&nbsp;</div>
             <div class="row">
@@ -42,106 +48,108 @@
                 </div>
             </div>
         </div>
-        <script src="~/js/signalr/dist/browser/signalr.js"></script>
-        <script src="~/js/chat.js"></script>
-        <br />
-        <h1>Details</h1>
+        <a href="#" rel="modal:close">Close</a>
+    </div>
+    <br />
+    <h1>Details</h1>
+    @* Button to open modal that allows user to enter interface for global chat *@
+    <p><a type="button" class="btn btn-primary" href="#ex1" rel="modal:open">See Messages!</a></p>
 
-        <div>
-            <h4>Leaseholder</h4>
-            <div class="card-img"><img src="@Html.DisplayFor(model => model.Leaseholder.ProfileUrl)" /></div>
-            <div class="card-footer">
-                <dl>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Leaseholder.FirstName)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Leaseholder.FirstName)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Leaseholder.LastName)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Leaseholder.LastName)
-                    </dd>
-                </dl>
-            </div>
-            < class="row">
-            <dd>
+    <div>
+        <h4>Leaseholder</h4>
+        <div class="card-img"><img src="@Html.DisplayFor(model => model.Leaseholder.ProfileUrl)" /></div>
+        <div class="card-footer">
+            <dl>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Leaseholder.FirstName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Leaseholder.FirstName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Leaseholder.LastName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Leaseholder.LastName)
+                </dd>
+            </dl>
+        </div>
+        < class="row">
+        <dd>
 
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Leaseholder.Property.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Leaseholder.Property.Type)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Leaseholder.Property.Address.City)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Leaseholder.Property.Address.City)
+        </dd>
+
+        <div class="table-bordered">
+            <dd class=" col-sm-10">
+                @Html.DisplayFor(model => model.Leaseholder.Property.Activities)
             </dd>
-
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Leaseholder.Property.Type)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Leaseholder.Property.Type)
+            <dd class=" col-sm-10">
+                @Html.DisplayFor(model => model.Leaseholder.Property.Address)
             </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Leaseholder.Property.Address.City)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Leaseholder.Property.Address.City)
+            <dd class=" col-sm-10">
+                @Html.DisplayFor(model => model.Leaseholder.Property.NumberBedrooms)
             </dd>
+            <dd class=" col-sm-10">
+                @Html.DisplayFor(model => model.Leaseholder.Property.SquareFootage)
+            </dd>
+            <dd class=" col-sm-10">
+                @Html.DisplayFor(model => model.Leaseholder.Property.Price)
+            </dd>
+            <dd class=" col-sm-10">
+                @Html.DisplayFor(model => model.Leaseholder.Property.isAvailable)
+            </dd>
+        </div>
 
-            <div class="table-bordered">
-                <dd class=" col-sm-10">
-                    @Html.DisplayFor(model => model.Leaseholder.Property.Activities)
-                </dd>
-                <dd class=" col-sm-10">
-                    @Html.DisplayFor(model => model.Leaseholder.Property.Address)
-                </dd>
-                <dd class=" col-sm-10">
-                    @Html.DisplayFor(model => model.Leaseholder.Property.NumberBedrooms)
-                </dd>
-                <dd class=" col-sm-10">
-                    @Html.DisplayFor(model => model.Leaseholder.Property.SquareFootage)
-                </dd>
-                <dd class=" col-sm-10">
-                    @Html.DisplayFor(model => model.Leaseholder.Property.Price)
-                </dd>
-                <dd class=" col-sm-10">
-                    @Html.DisplayFor(model => model.Leaseholder.Property.isAvailable)
-                </dd>
-            </div>
-
-            <div class=" col-sm-10">
-                @foreach (var item in Model.UserPreferences)
-                {
-                    <div class="table-">
-                        @Html.DisplayFor(modelItem => item.PreferenceName.Name)
-                    </div>
-                    <div class="table">
-                        @Html.DisplayFor(modelItem => item.Value)
-                    </div>
-                }
-
-            </div>
+        <div class=" col-sm-10">
+            @foreach (var item in Model.UserPreferences)
+            {
+                <div class="table-">
+                    @Html.DisplayFor(modelItem => item.PreferenceName.Name)
+                </div>
+                <div class="table">
+                    @Html.DisplayFor(modelItem => item.Value)
+                </div>
+            }
 
         </div>
 
-        <div>
-            <a asp-action="Edit" asp-route-id="@Model.Leaseholder.Id" class="btn btn-danger">Edit</a> |
-            <a asp-action="Index">Back to List</a>
+    </div>
+
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Leaseholder.Id" class="btn btn-danger">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+    <div>
+        <div style="margin-top: 20px; margin-bottom: 20px; color: black">
+            Click <button class="btn btn-dark" onclick="recommendations()">Here</button> if you'd like to see some recommendations about how to improve your profile
+        </div>
+        <div style="border-color: black; border-width: 4px; color: red; margin-bottom: 10px">
+            <hr />
+            <div id="Photos">
+            </div>
+            <div id="Description">
+            </div>
+            <div id="Price">
+            </div>
+            <div id="Random">
+            </div>
         </div>
 
-        <div>
-            <div style="margin-top: 20px; margin-bottom: 20px; color: black">
-                Click <button class="btn btn-dark" onclick="recommendations()">Here</button> if you'd like to see some recommendations about how to improve your profile
-            </div>
-            <div style="border-color: black; border-width: 4px; color: red; margin-bottom: 10px">
-                <hr />
-                <div id="Photos">
-                </div>
-                <div id="Description">
-                </div>
-                <div id="Price">
-                </div>
-                <div id="Random">
-                </div>
-            </div>
-
-            <script type="text/javascript">
+        <script type="text/javascript">
             function recommendations() {
                 //Change to check image brightness and tell them images need to be brighter if necessary
                 if (@Model.Value[Model.Value.Count -1] < 15) {
@@ -170,8 +178,18 @@
                 }
                 //Nice because it limits to four recommendations, not to overwhelm, but will update with new rec if they fix one
             }
-            </script>
-        </div>
+        </script>
+    </div>
+
+    @* General javascript file *@
+    <script type="text/javascript" src="~/js/site.js"></script>
+    @* Scripts for global chat *@
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat.js"></script>
+    @* Others *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 </body>
 </html>
 
