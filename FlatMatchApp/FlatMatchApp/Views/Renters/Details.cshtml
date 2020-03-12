@@ -10,6 +10,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Details</title>
 </head>
 <body>
@@ -20,7 +21,6 @@
                     <div id="map"></div>
                 </body>
             </div>
-
             <div class="col-md-6">
                 <h4>Property Details</h4>
                 <hr />
@@ -62,30 +62,70 @@
     //var labelIndex = 0;
     function initialize() {
         geocoder = new google.maps.Geocoder();
+        var address = "@Model.Leaseholder.Property.Address.StreetName + @Model.Leaseholder.Property.Address.City + @Model.Leaseholder.Property.Address.State";
+            geocoder.geocode( { 'address': address}, function(results, status) {
+                if (status == 'OK') {
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        //label: labels[labelIndex++], //couldn't get labels to work, commenting out to potentially add later
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
         var latlng = new google.maps.LatLng(43.0389, -87.9065); //This is from https://developers.google.com/maps/documentation/javascript/geocoding#GeocodingRequests
         var mapOptions = {
             zoom: 14,
             center: latlng
         }
         map = new google.maps.Map(document.getElementById('map'), mapOptions);
-        codeAddress();
+        placeMarkers();
     }
 
-    function codeAddress() {
-        var address = "@Model.Leaseholder.Property.Address.StreetName + @Model.Leaseholder.Property.Address.City + @Model.Leaseholder.Property.Address.State";
-        geocoder.geocode( { 'address': address}, function(results, status) {
-            if (status == 'OK') {
-                map.setCenter(results[0].geometry.location);
-                var marker = new google.maps.Marker({
-                    //label: labels[labelIndex++], //couldn't get labels to work, commenting out to potentially add later
-                    map: map,
-                    position: results[0].geometry.location
+        function placeMarkers() {
+            axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
+                params: {
+                    location: "-33.8670522,151.1957362",
+                    radius: 1500,
+                    type: "restaurant",
+                    key: '@API_KEYS.GoogleAPI'
+                }
+            })
+                .then(function (response) {
+                    for (place in response.data.results) {
+                        lat = response.data.results[place].geometry.location.lat;
+                        lng = response.data.results[place].geometry.location.lng;
+
+                        var marker = new google.maps.Marker({ position: { lat: lat, lng: lng }, map: map });
+                        console.log(lat);
+                    }
                 });
-            } else {
-                alert('Geocode was not successful for the following reason: ' + status);
-            }
-        });
-    }
+        }
+
+    @*function codeAddress() {
+        var addresses = [];
+        @foreach (var leaseholder in Model.Leaseholders)
+        {
+            @:addresses.push("@leaseholder.Property.Address.StreetName + @leaseholder.Property.Address.City + @leaseholder.Property.Address.State")
+        }
+        for (var i = 0; i < @Model; i++) {
+            var address = addresses[i];
+            geocoder.geocode( { 'address': address}, function(results, status) {
+                if (status == 'OK') {
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        //label: labels[labelIndex++], //couldn't get labels to work, commenting out to potentially add later
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+    }*@
 
     </script>
 

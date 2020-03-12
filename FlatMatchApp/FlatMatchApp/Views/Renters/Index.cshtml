@@ -15,11 +15,11 @@
 <body>
 
     <p>
-            <body onload="initialize()">
-                <div id="map"></div>
-            </body>
-        </p>
-   
+        <body onload="initialize()">
+            <div id="map"></div>
+        </body>
+    </p>
+
 
     <table class="table">
         <thead>
@@ -53,33 +53,32 @@
     <div class="container">
         <div class="row">&nbsp;</div>
         <div class="row">
-            
-            <div class="col-4"><input type="hidden" id="userInput" value="@User.Identity.Name" /></div>
-            <br />
-        </div>
-        <div class="row">
-            <div class="col-2">Message</div>
-            <div class="col-4"><input type="text" id="messageInput" /></div>
-        </div>
-        <div class="row">&nbsp;</div>
-        <div class="row">
+            <div class="col-6">&nbsp;</div>
             <div class="col-6">
-                <input type="button" id="sendButton" value="Send Message" />
+                <form class="form-inline">
+                    <div class="input-prepend input-append">
+                        <input type="text" name="group-message" id="group-message-text" placeholder="Type a message" />
+                        <input type="text" name="group-name" id="group-name" placeholder="Type a group name" />
+                        <input type="button" id="groupmsg" class="btn btn-primary" value="Send to Group" />
+                        <input type="button" id="join-group" class="btn btn-primary" value="Join Group" />
+                        <input type="button" id="leave-group" class="btn btn-primary" value="Leave Group" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <hr />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">&nbsp;</div>
+            <div class="col-6">
+                <ul id="messagesList"></ul>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <hr />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <ul id="messagesList"></ul>
-        </div>
-    </div>
-    <script src="~/js/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/chat.js"></script>
+
 
     <script>
     var geocoder;
@@ -152,5 +151,7 @@
             src="https://maps.googleapis.com/maps/api/js?key= + @API_KEYS.GoogleAPI">
     </script>
     <script type="text/javascript" src="~/js/site.js"></script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat.js"></script>
 </body>
 </html>
