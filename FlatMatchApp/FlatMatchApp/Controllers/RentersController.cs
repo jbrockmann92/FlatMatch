@@ -64,7 +64,7 @@ namespace FlatMatchApp.Controllers
                                         .Include(l => l.Property.Address)
                                         .FirstOrDefault(l => l.Id == id);
             viewModel.UserPreferences = _context.UserPreferences.Include(u => u.PreferenceName).Where(u => u.UserId == userId).ToList();
-                     
+             
 
             return View(viewModel);
         }

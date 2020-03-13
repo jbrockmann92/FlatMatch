@@ -45,6 +45,14 @@ namespace FlatMatchApp
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddSignalR();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,6 +85,7 @@ namespace FlatMatchApp
                 endpoints.MapRazorPages();
                 endpoints.MapHub<ChatHub>("/chathub");
             });
+            app.UseCors("CorsPolicy");
         }
     }
 }
